@@ -34,7 +34,8 @@ public class NuovaFotoController {
 }
 
     public void setCeckprivata(CheckBox ceckprivata) {
-        this.ceckprivata = ceckprivata;
+        this.ceckprivata = ceckprivata;|
+        
     }
 }
 
