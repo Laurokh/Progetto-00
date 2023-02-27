@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
@@ -34,13 +33,14 @@
             </Label>
             <TextField layoutX="81.0" layoutY="321.0" prefHeight="25.0" prefWidth="110.0" />
             <TextField layoutX="287.0" layoutY="321.0" prefHeight="25.0" prefWidth="114.0" />
-            <Button layoutX="253.0" layoutY="360.0" mnemonicParsing="false" text="Conferma"  />
+            <Button layoutX="253.0" layoutY="360.0" mnemonicParsing="false" text="Conferma" />
             <Button layoutX="341.0" layoutY="360.0" mnemonicParsing="false" text="Annulla" />
             <ImageView fitHeight="226.0" fitWidth="391.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
             <DatePicker layoutX="315.0" layoutY="277.0" prefHeight="25.0" prefWidth="90.0" promptText="Data" />
-            <CheckBox fx:id="ceckPrivata" layoutX="14.0" layoutY="355.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Privata" selected="false" onAction="#isPrivate" />
             <Button layoutX="108.0" layoutY="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="203.0" text="Seleziona immagine" />
             <MenuButton layoutX="15.0" layoutY="277.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="175.0" text="Luogo" />
+            <Button fx:id="fotoPublica" layoutX="24.0" layoutY="360.0" mnemonicParsing="false" text="Publica" onAction="#setPublica" />
+            <Button fx:id="fotoPrivata" layoutX="84.0" layoutY="360.0" mnemonicParsing="false" text="Privata" onAction="#setPrivata" />
          </children>
       </AnchorPane>
    </children>
