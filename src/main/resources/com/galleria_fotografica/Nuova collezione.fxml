@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="372.0" prefWidth="421.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.galleria_fotografica.controller.LoginController">
+<VBox prefHeight="372.0" prefWidth="421.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.galleria_fotografica.controller.NuovaCollezione">
    <children>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="409.0" prefWidth="421.0">
          <children>
@@ -18,8 +18,8 @@
                </font>
             </Label>
             <TextField layoutX="10.0" layoutY="26.0" prefHeight="25.0" prefWidth="397.0" />
-            <Button layoutX="92.0" layoutY="333.0" mnemonicParsing="false" text="Conferma" />
-            <Button layoutX="253.0" layoutY="333.0" mnemonicParsing="false" text="Annulla" />
+            <Button layoutX="92.0" layoutY="333.0" mnemonicParsing="false" text="Conferma" onAction="#conferma" />
+            <Button layoutX="253.0" layoutY="333.0" mnemonicParsing="false" text="Annulla" onAction="#annulla" />
             <Label layoutX="10.0" layoutY="64.0" text="Partecipanti:">
                <font>
                   <Font size="14.0" />

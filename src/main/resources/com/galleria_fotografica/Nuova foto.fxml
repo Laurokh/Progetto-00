@@ -33,8 +33,8 @@
             </Label>
             <TextField layoutX="81.0" layoutY="321.0" prefHeight="25.0" prefWidth="110.0" />
             <TextField layoutX="287.0" layoutY="321.0" prefHeight="25.0" prefWidth="114.0" />
-            <Button layoutX="253.0" layoutY="360.0" mnemonicParsing="false" text="Conferma" />
-            <Button layoutX="341.0" layoutY="360.0" mnemonicParsing="false" text="Annulla" />
+            <Button layoutX="253.0" layoutY="360.0" mnemonicParsing="false" text="Conferma" onAction="#conferma" />
+            <Button layoutX="341.0" layoutY="360.0" mnemonicParsing="false" text="Annulla" onAction="#annulla" />
             <ImageView fitHeight="226.0" fitWidth="391.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
             <DatePicker layoutX="315.0" layoutY="277.0" prefHeight="25.0" prefWidth="90.0" promptText="Data" />
             <Button layoutX="108.0" layoutY="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="203.0" text="Seleziona immagine" />
