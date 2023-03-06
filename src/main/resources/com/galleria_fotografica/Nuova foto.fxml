@@ -15,7 +15,7 @@
    <children>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="409.0" prefWidth="421.0">
          <children>
-            <MenuButton fx:id="dispositivoMenuButton" layoutX="217.0" layoutY="277.0" mnemonicParsing="false" text="Dispositivo">
+            <MenuButton fx:id="dispositivoMenuButton" layoutX="197.0" layoutY="277.0" mnemonicParsing="false" text="Dispositivo">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#cellulare" text="Cellulare" />
                 <MenuItem mnemonicParsing="false" onAction="#fotocamera" text="Fotocamera" />
@@ -33,14 +33,14 @@
             </Label>
             <TextField layoutX="81.0" layoutY="321.0" prefHeight="25.0" prefWidth="110.0" />
             <TextField layoutX="287.0" layoutY="321.0" prefHeight="25.0" prefWidth="114.0" />
-            <Button layoutX="253.0" layoutY="360.0" mnemonicParsing="false" text="Conferma" onAction="#conferma" />
-            <Button layoutX="341.0" layoutY="360.0" mnemonicParsing="false" text="Annulla" onAction="#annulla" />
+            <Button layoutX="253.0" layoutY="360.0" mnemonicParsing="false" onAction="#conferma" text="Conferma" />
+            <Button layoutX="341.0" layoutY="360.0" mnemonicParsing="false" onAction="#annulla" text="Annulla" />
             <ImageView fitHeight="226.0" fitWidth="391.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
             <DatePicker layoutX="315.0" layoutY="277.0" prefHeight="25.0" prefWidth="90.0" promptText="Data" />
             <Button layoutX="108.0" layoutY="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="203.0" text="Seleziona immagine" />
             <MenuButton layoutX="15.0" layoutY="277.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="175.0" text="Luogo" />
-            <Button fx:id="fotoPublica" layoutX="24.0" layoutY="360.0" mnemonicParsing="false" text="Publica" onAction="#setPublica" />
-            <Button fx:id="fotoPrivata" layoutX="84.0" layoutY="360.0" mnemonicParsing="false" text="Privata" onAction="#setPrivata" />
+            <Button fx:id="fotoPublica" layoutX="24.0" layoutY="360.0" mnemonicParsing="false" onAction="#setPublica" text="Publica" />
+            <Button fx:id="fotoPrivata" layoutX="104.0" layoutY="360.0" mnemonicParsing="false" onAction="#setPrivata" text="Privata" />
          </children>
       </AnchorPane>
    </children>
