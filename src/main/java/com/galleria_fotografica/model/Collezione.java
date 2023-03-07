@@ -9,7 +9,7 @@ public class Collezione {
     private LocalDate data_creazione;
 
 
-
+//
     private ArrayList <Compone> compone= new ArrayList<>();
 
     public void addcompone(Compone compone) {

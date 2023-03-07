@@ -10,10 +10,10 @@ public class Connessione {
 
     private Connessione() throws SQLException {
         String driver= "org.postgresql.Driver";
-        String url= "jdbc:postgrsql://localhost:5432/postgres";
+        String url= "jdbc:postgresql://localhost:5432/postgres";
         String username= "postgres";
         String psw= "5656";
-
+//
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
