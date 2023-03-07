@@ -1,6 +1,10 @@
 package com.galleria_fotografica.model;
 
 
+import javafx.stage.FileChooser;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -11,6 +15,8 @@ public class Foto {
     private LocalDate data_scatto;
     private Luogo luogo;
     private Utente scattata_da;
+
+    private FileChooser iFile;
     private ArrayList<Compone> compone = new ArrayList<>();
     private ArrayList<Tema> temi = new ArrayList<>();
     private ArrayList<Utente> rappresenta = new ArrayList<>();
