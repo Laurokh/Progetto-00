@@ -16,7 +16,7 @@ public class Foto {
     private Luogo luogo;
     private Utente scattata_da;
 
-    private FileChooser iFile;
+    //private FileChooser iFile;
     private ArrayList<Compone> compone = new ArrayList<>();
     private ArrayList<Tema> temi = new ArrayList<>();
     private ArrayList<Utente> rappresenta = new ArrayList<>();

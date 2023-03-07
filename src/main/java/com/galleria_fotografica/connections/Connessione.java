@@ -36,7 +36,7 @@ public class Connessione {
     }
 }
 
-
+//
 //Dao
 /* String query= "la query";
         try {
