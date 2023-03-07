@@ -34,9 +34,9 @@ public class Connessione {
         }
         return istanza;
     }
-
-
 }
+
+
 //Dao
 /* String query= "la query";
         try {
