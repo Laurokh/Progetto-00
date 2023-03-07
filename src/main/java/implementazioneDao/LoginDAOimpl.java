@@ -19,7 +19,7 @@ public class LoginDAOimpl implements LoginDAO {
             if (rs.next()) {
                 return rs;
             } else {
-                return null ;
+                return null;
             }
 
         } catch (

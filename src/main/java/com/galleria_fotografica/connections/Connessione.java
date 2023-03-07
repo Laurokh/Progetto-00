@@ -1,5 +1,7 @@
 package com.galleria_fotografica.connections;
 
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,7 +12,7 @@ public class Connessione {
 
     private Connessione() throws SQLException {
         String driver= "org.postgresql.Driver";
-        String url= "jdbc:postgresql://localhost:5432/postgres";
+        String url= "jdbc:postgresql://localhost:5432/dataObj";
         String username= "postgres";
         String psw= "5656";
 //
@@ -20,7 +22,7 @@ public class Connessione {
             throw new RuntimeException(e);
         }
 
-        DriverManager.getConnection(url,username,psw);
+        connessione=DriverManager.getConnection(url,username,psw);
 
 
     }

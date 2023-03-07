@@ -16,8 +16,11 @@ public class GalleriaController {
     private @FXML Button go;
     private @FXML Button nuovaFoto;
     private @FXML Button nuovaCollezione;
+    LoginController nomeutente;
+    private @FXML void  initialize() {
 
-    private @FXML void  initialize() {nomeUtenteLabel.setText("test");}
+
+        nomeUtenteLabel.setText("dfdf"));}
 
 
 
