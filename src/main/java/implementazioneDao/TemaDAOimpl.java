@@ -1,18 +1,16 @@
 package implementazioneDao;
 
-import DAO.NuovaCollezioneDAO;
+import DAO.TemaDao;
 import com.galleria_fotografica.connections.Connessione;
-import javafx.scene.chart.PieChart;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
-public class NuovaCollezioneDAOimpl implements NuovaCollezioneDAO {
+public class TemaDAOimpl implements TemaDao {
 
+    public ResultSet caricaTemi () {
 
-    public ResultSet listautenti (){
-        String query = "SELECT * FROM Utente";
+        String query = "SELECT nome FROM Tema";
         try {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);
@@ -22,27 +20,29 @@ public class NuovaCollezioneDAOimpl implements NuovaCollezioneDAO {
             } else {
                 return null ;
             }
-        } catch (
-                SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 
 
-
-
-    public ResultSet nuovaCollezione(String nome, LocalDate data) {
-        String query = "INSERT INTO Collezione VALUES (DEFAULT,'" + nome + "','" + data + "' )";
-
-        ResultSet rs;
+    public ResultSet nuovoTema (String nome,String descrizione){
+        String query= "INSERT INTO Tema VALUES (DEFAULT,'"+descrizione+"','"+nome+"')";
         try {
             Connessione db = Connessione.getInstanza();
-            rs = db.connessione.createStatement().executeQuery(query);
+            ResultSet rs = db.connessione.createStatement().executeQuery(query);
             db.connessione.close();
+            if (rs.next()) {
+                return rs;
+            } else {
+                return null ;
+            }
+
         } catch (
                 SQLException e) {
             throw new RuntimeException(e);
         }
-        return rs;
+
     }
 }
