@@ -1,5 +1,6 @@
 package com.galleria_fotografica.controller;
 
+import com.galleria_fotografica.model.Foto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -8,34 +9,36 @@ import javafx.stage.Stage;
 
 public class NuovaFotoController {
     private @FXML MenuButton dispositivoMenuButton;
-    private String dispositivoSelezionato = null;
+    ;
+    private Foto foto=new Foto();
 
 
-    private Boolean privata;
 
 
     private @FXML void fotocamera() {
         dispositivoMenuButton.setText("Fotocamera");
-        dispositivoSelezionato = "Fotocamera";
+         foto.setDispositivo("Fotocamera");
 
     }
 
     private @FXML void cellulare() {
         dispositivoMenuButton.setText("Cellulare");
-        dispositivoSelezionato = "Cellulare";
+        foto.setDispositivo("Cellulare");
     }
 
 
     public void setPrivata() {
-        privata = true;
+        foto.setPrivata(true);
     }
 
     public void setPublica() {
-        privata = false;
+        foto.setPrivata(false);
     }
 
     private @FXML void conferma() {
+
         Stage stage = (Stage) dispositivoMenuButton.getScene().getWindow();
+
         stage.close();
     }
 

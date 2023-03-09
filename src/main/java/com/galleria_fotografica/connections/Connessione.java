@@ -40,14 +40,19 @@ public class Connessione {
 
 //
 //Dao
-/* String query= "la query";
-        try {
+/*    String query= "la query";
+            try {
             Connessione db = Connessione.getInstanza();
-            ResultSet rs=db.connessione.createStatement().executeQuery(query);
-           while (rs.next()) {
-                //faccio cose col resultset
-           }
-           db.connessione.close();
-       } catch (SQLException e) {
-           throw new RuntimeException(e);
-       } */
+            ResultSet rs = db.connessione.createStatement().executeQuery(query);
+            db.connessione.close();
+            if (rs.next()) {
+                return rs;
+            } else {
+                return null ;
+            }
+
+        } catch (
+                SQLException e) {
+            throw new RuntimeException(e);
+        }
+}*/

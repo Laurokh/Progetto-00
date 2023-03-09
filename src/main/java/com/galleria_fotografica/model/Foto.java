@@ -5,6 +5,7 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.file.SimpleFileVisitor;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -16,10 +17,22 @@ public class Foto {
     private Luogo luogo;
     private Utente scattata_da;
 
-    //private FileChooser iFile;
+    private FileChooser iFile;
     private ArrayList<Compone> compone = new ArrayList<>();
     private ArrayList<Tema> temi = new ArrayList<>();
     private ArrayList<Utente> rappresenta = new ArrayList<>();
+
+
+    public void setDispositivo(String dispositivo) {
+        this.dispositivo = dispositivo;
+    }
+
+    public void setPrivata(boolean privata) {
+        this.privata = privata;
+    }
+
+
+
 
 
     public Foto(String id, String dispositivo, boolean privata, LocalDate data_scatto) {
@@ -27,10 +40,11 @@ public class Foto {
         this.dispositivo = dispositivo;
         this.privata = privata;
         this.data_scatto = data_scatto;
-
+        this.iFile= null;
 
     }
 
+    public Foto(){}
 
     public void setscattata_da(Utente scattata_da) {
         this.scattata_da = scattata_da;
