@@ -17,20 +17,20 @@ public class GalleriaController {
     private @FXML Button go;
     private @FXML Button nuovaFoto;
     private @FXML Button nuovaCollezione;
+    private Utente utente;
 
     private @FXML void  initialize() {
-        utente = (Utente) nomeUtenteLabel.getScene().getUserData();
-        nomeUtenteLabel.setText(utente.getNickname());
+//        utente = (Utente)nomeUtenteLabel.getScene().getWindow().getUserData();
+//        nomeUtenteLabel.setText(utente.getNickname());
 
 
     }
 
 
 
-    private Utente utente;
 
     private @FXML void nuovaFoto() {
-
+        System.out.println(nomeUtenteLabel.getScene());
         Stage newStage = new Stage();
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Nuova foto.fxml"));
