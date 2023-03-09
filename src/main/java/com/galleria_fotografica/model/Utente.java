@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Utente {
     private String nickname;
-    private String id;
+    private int id;
     private ArrayList<Foto> scatta = new ArrayList<>();
     private ArrayList<Foto> rappresentato = new ArrayList<>();
 
@@ -17,11 +17,16 @@ public class Utente {
         this.rappresentato.add(rappresentato);
     }
 
-    public Utente(String nickname, String id) {
+    public Utente(String nickname, int id) {
         this.nickname = nickname;
         this.id = id;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
 
-
+    public int getId() {
+        return id;
+    }
 }

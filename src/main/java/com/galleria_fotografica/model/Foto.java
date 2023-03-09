@@ -23,6 +23,18 @@ public class Foto {
     private ArrayList<Utente> rappresenta = new ArrayList<>();
 
 
+    public void setDispositivo(String dispositivo) {
+        this.dispositivo = dispositivo;
+    }
+
+    public void setPrivata(boolean privata) {
+        this.privata = privata;
+    }
+
+
+
+
+
     public Foto(String id, String dispositivo, boolean privata, LocalDate data_scatto) {
         this.id = id;
         this.dispositivo = dispositivo;
@@ -32,6 +44,7 @@ public class Foto {
 
     }
 
+    public Foto(){}
 
     public void setscattata_da(Utente scattata_da) {
         this.scattata_da = scattata_da;

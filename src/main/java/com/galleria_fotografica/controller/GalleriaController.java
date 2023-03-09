@@ -1,6 +1,7 @@
 package com.galleria_fotografica.controller;
 
 import com.galleria_fotografica.Main;
+import com.galleria_fotografica.model.Utente;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,9 +18,16 @@ public class GalleriaController {
     private @FXML Button nuovaFoto;
     private @FXML Button nuovaCollezione;
 
-    private @FXML void  initialize() {nomeUtenteLabel.setText("test");}
+    private @FXML void  initialize() {
+        utente = (Utente) nomeUtenteLabel.getScene().getUserData();
+        nomeUtenteLabel.setText(utente.getNickname());
 
 
+    }
+
+
+
+    private Utente utente;
 
     private @FXML void nuovaFoto() {
 
