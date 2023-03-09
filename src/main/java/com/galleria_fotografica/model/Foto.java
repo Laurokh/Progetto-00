@@ -4,8 +4,6 @@ package com.galleria_fotografica.model;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.nio.file.SimpleFileVisitor;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -15,12 +13,19 @@ public class Foto {
     private boolean privata;
     private LocalDate data_scatto;
     private Luogo luogo;
+
+
+
     private Utente scattata_da;
 
-    private FileChooser iFile;
+    private FileChooser File;
     private ArrayList<Compone> compone = new ArrayList<>();
-    private ArrayList<Tema> temi = new ArrayList<>();
+    private ArrayList<String> temi = new ArrayList<String>();
     private ArrayList<Utente> rappresenta = new ArrayList<>();
+
+    public Foto() {
+
+    }
 
 
     public void setDispositivo(String dispositivo) {
@@ -31,7 +36,24 @@ public class Foto {
         this.privata = privata;
     }
 
+    public void setDataScatto(LocalDate data_scatto) { this.data_scatto= data_scatto;
+    }
 
+    public void scegliFoto() {
+
+        FileChooser fileChooser = new FileChooser();
+
+
+        FileChooser.ExtensionFilter imagesFilter = new FileChooser.ExtensionFilter("Immagini", "*.jpg", "*.jpeg");
+        fileChooser.getExtensionFilters().addAll(imagesFilter);
+
+
+        java.io.File foto = fileChooser.showOpenDialog(null);
+
+        if (foto != null) {
+            //todo chiedi qua
+        }
+    }
 
 
 
@@ -40,18 +62,22 @@ public class Foto {
         this.dispositivo = dispositivo;
         this.privata = privata;
         this.data_scatto = data_scatto;
-        this.iFile= null;
+        //todo vedi this.File= null;
 
     }
 
-    public Foto(){}
+
 
     public void setscattata_da(Utente scattata_da) {
         this.scattata_da = scattata_da;
     }
 
-    public void addtema(Tema tema) {
+    public void addtema(String tema) {
         this.temi.add(tema);
+    }
+
+    public void togliTema (String tema){
+        this.temi.removeIf(item-> item.equals(tema));
     }
 
     public void addcompone(Compone compone) {
@@ -65,5 +91,6 @@ public class Foto {
     public void setrappresenta(Utente rappresenta) {
         this.rappresenta.add(rappresenta);
     }
+
 
 }

@@ -2,6 +2,8 @@ package com.galleria_fotografica.controller;
 
 import com.galleria_fotografica.Main;
 import com.galleria_fotografica.model.Utente;
+import implementazioneDao.LoginDAOimpl;
+import implementazioneDao.TemaDAOimpl;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,18 +21,15 @@ public class GalleriaController {
     private @FXML Button nuovaCollezione;
     private Utente utente;
 
-    private @FXML void  initialize() {
-//        utente = (Utente)nomeUtenteLabel.getScene().getWindow().getUserData();
-//        nomeUtenteLabel.setText(utente.getNickname());
-
+    private @FXML void initialize() {
+       // utente = (Utente)nomeUtenteLabel.getScene().getWindow().getUserData();
+        nomeUtenteLabel.setText("utente");
 
     }
 
 
-
-
     private @FXML void nuovaFoto() {
-        System.out.println(nomeUtenteLabel.getScene());
+
         Stage newStage = new Stage();
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Nuova foto.fxml"));
@@ -64,7 +63,7 @@ public class GalleriaController {
         newStage.setScene(scene);
 
 
-        newStage.setTitle("Nuoca collezione");
+        newStage.setTitle("Nuova collezione");
         newStage.setResizable(false);
         newStage.initModality(Modality.APPLICATION_MODAL);
         newStage.show();

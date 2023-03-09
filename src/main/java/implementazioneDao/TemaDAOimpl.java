@@ -10,16 +10,13 @@ public class TemaDAOimpl implements TemaDao {
 
     public ResultSet caricaTemi () {
 
-        String query = "SELECT nome FROM Tema";
+        String query = "SELECT * FROM Tema";
         try {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);
             db.connessione.close();
-            if (rs.next()) {
-                return rs;
-            } else {
-                return null ;
-            }
+            return rs;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
