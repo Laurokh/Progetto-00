@@ -44,7 +44,7 @@ public class LoginController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            utente= new Utente(rs.getString("username"), rs.getInt("id"));
+            utente= new Utente(rs.getString("username"), rs.getInt("idUtente"));
 
             newStage.setScene(scene);
             newStage.setUserData(utente);
@@ -55,6 +55,7 @@ public class LoginController {
             newStage.setResizable(false);
             newStage.show();
         } else testo.setText("Nome utente o Password errata");
+
     }
 
 
