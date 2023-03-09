@@ -44,7 +44,8 @@ public class LoginController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            utente= new Utente(rs.getString("username"), rs.getInt("idutente"));
+            utente= new Utente(rs.getString("username"), rs.getInt("id"));
+
             newStage.setScene(scene);
             newStage.setUserData(utente);
             oldStage.close();
@@ -53,7 +54,7 @@ public class LoginController {
             newStage.setTitle("Galleria");
             newStage.setResizable(false);
             newStage.show();
-        } else {testo.setText("Nome utente o Password errata");}
+        } else testo.setText("Nome utente o Password errata");
     }
 
 
