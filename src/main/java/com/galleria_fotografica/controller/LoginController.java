@@ -54,7 +54,7 @@ public class LoginController {
             newStage.setTitle("Galleria");
             newStage.setResizable(false);
             newStage.show();
-        } else testo.setText("Nome utente o Password errata");
+        } else {testo.setText("Nome utente o Password errata");};
     }
 
 
