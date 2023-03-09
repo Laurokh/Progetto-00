@@ -44,7 +44,7 @@ public class LoginController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            utente= new Utente(rs.getString("username"), rs.getInt("id"));
+            utente= new Utente(rs.getString("username"), rs.getInt("idutente"));
 
             newStage.setScene(scene);
             newStage.setUserData(utente);
