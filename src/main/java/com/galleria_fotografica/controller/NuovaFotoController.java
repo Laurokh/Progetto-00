@@ -4,6 +4,7 @@ import com.galleria_fotografica.model.Foto;
 import com.galleria_fotografica.model.Luogo;
 import implementazioneDao.LoginDAOimpl;
 import implementazioneDao.LuogoDaoimpl;
+import implementazioneDao.NuovaFotoDaoimpl;
 import implementazioneDao.TemaDAOimpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,10 +31,10 @@ public class NuovaFotoController {
 
     private @FXML void initialize() {
 
-        TemaDAOimpl dao = new TemaDAOimpl();
-        LuogoDaoimpl dao2 = new LuogoDaoimpl();
-        ResultSet rs = dao.caricaTemi();
-        ResultSet rs2 = dao2.caricaLuogo();
+        TemaDAOimpl temaDao = new TemaDAOimpl();
+        LuogoDaoimpl luogoDao = new LuogoDaoimpl();
+        ResultSet rs = temaDao.caricaTemi();
+        ResultSet rs2 = luogoDao.caricaLuogo();
         try {
             while (rs2.next()) {
                 String nomeLuogo = rs2.getString("nome");
@@ -100,6 +101,7 @@ public class NuovaFotoController {
 
 
     private @FXML void conferma() {
+        NuovaFotoDaoimpl fotoDao = new NuovaFotoDaoimpl();
 
         Stage stage = (Stage) dispositivoMenuButton.getScene().getWindow();
 
