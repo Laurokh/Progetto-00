@@ -9,12 +9,20 @@ public class Collezione {
     private LocalDate data_creazione;
 
 
-//
-    private ArrayList <Compone> compone= new ArrayList<>();
+    //
+    private ArrayList<String> compone = new ArrayList<String>();
 
-    public void addcompone(Compone compone) {
+    public Collezione() {
+
+    }
+
+    public void addutente(String compone) {
 
         this.compone.add(compone);
+    }
+
+    public void togliutente(String compone) {
+        this.compone.removeIf(item -> item.equals(compone));
     }
 
     public Collezione(String nome, String id, LocalDate data_creazione) {
