@@ -2,21 +2,15 @@ package com.galleria_fotografica.controller;
 
 import com.galleria_fotografica.model.Foto;
 import com.galleria_fotografica.model.Luogo;
-import implementazioneDao.LoginDAOimpl;
 import implementazioneDao.LuogoDaoimpl;
 import implementazioneDao.NuovaFotoDaoimpl;
-import implementazioneDao.TemaDAOimpl;
-import javafx.event.ActionEvent;
+import implementazioneDao.TemaDaoimpl;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.Date;
 
 public class NuovaFotoController {
     private @FXML MenuButton dispositivoMenuButton;
@@ -31,7 +25,7 @@ public class NuovaFotoController {
 
     private @FXML void initialize() {
 
-        TemaDAOimpl temaDao = new TemaDAOimpl();
+        TemaDaoimpl temaDao = new TemaDaoimpl();
         LuogoDaoimpl luogoDao = new LuogoDaoimpl();
         ResultSet rs = temaDao.caricaTemi();
         ResultSet rs2 = luogoDao.caricaLuogo();
@@ -121,5 +115,5 @@ public class NuovaFotoController {
 
 }
 //todo finisci l'aggiunta della foto, funzione di inserimento nel model e nel database
-
+//todo controllo per vlaori null , solo dispositivo deve essere compilato
 

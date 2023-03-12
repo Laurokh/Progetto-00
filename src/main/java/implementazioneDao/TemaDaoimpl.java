@@ -6,7 +6,7 @@ import com.galleria_fotografica.connections.Connessione;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class TemaDAOimpl implements TemaDao {
+public class TemaDaoimpl implements TemaDao {
 
     public ResultSet caricaTemi () {
 

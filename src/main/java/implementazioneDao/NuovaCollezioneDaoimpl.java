@@ -2,13 +2,12 @@ package implementazioneDao;
 
 import DAO.NuovaCollezioneDAO;
 import com.galleria_fotografica.connections.Connessione;
-import javafx.scene.chart.PieChart;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-public class NuovaCollezioneDAOimpl implements NuovaCollezioneDAO {
+public class NuovaCollezioneDaoimpl implements NuovaCollezioneDAO {
 
 
     public ResultSet listautenti (){

@@ -7,7 +7,7 @@ import com.galleria_fotografica.connections.Connessione;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoginDAOimpl implements LoginDAO {
+public class LoginDaoimpl implements LoginDAO {
 
     public ResultSet login(String nome, String pass) {
         String query = "SELECT * FROM Utente WHERE username = '" + nome + "' AND password = '" + pass + "'";
