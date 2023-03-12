@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class GalleriaDaoimpl implements GalleriaDao {
 
     public ResultSet listaLuoghi() {
-        String query= "SELECT * FROM Foto";
+        String query= "SELECT nome FROM luogo";
         try {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);
@@ -17,7 +17,24 @@ public class GalleriaDaoimpl implements GalleriaDao {
             if (rs.next()) {
                 return rs;
             } else {
-                return null ;
+                return rs ;
+            }
+
+        } catch (
+                SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ResultSet listaTemi() {
+        String query= "SELECT nome FROM tema";
+        try {
+            Connessione db = Connessione.getInstanza();
+            ResultSet rs = db.connessione.createStatement().executeQuery(query);
+            db.connessione.close();
+            if (rs.next()) {
+                return rs;
+            } else {
+                return rs ;
             }
 
         } catch (
