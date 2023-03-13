@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TitledPane collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="306.0" prefWidth="319.0" text="Luoghi più immortalati" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<TitledPane collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="307.0" prefWidth="235.0" text="Luoghi più immortalati" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.galleria_fotografica.controller.LuoghiPiuImmortalati">
    <content>
-      <AnchorPane prefHeight="314.0" prefWidth="341.0">
+      <AnchorPane prefHeight="298.0" prefWidth="300.0">
          <children>
             <Button fx:id="Chiudi" layoutX="142.0" layoutY="267.0" mnemonicParsing="false" text="Chiudi" />
-            <ListView layoutX="19.0" layoutY="20.0" prefHeight="247.0" prefWidth="297.0" />
+            <TableView fx:id="tabella" layoutX="19.0" layoutY="20.0" prefHeight="247.0" prefWidth="297.0">
+               <columns>
+                  <TableColumn fx:id="nome" prefWidth="126.79241752624512" text="Nome" />
+                  <TableColumn fx:id="nFoto" prefWidth="108.6793212890625" text="Numero foto" />
+               </columns></TableView>
          </children>
       </AnchorPane>
    </content>
