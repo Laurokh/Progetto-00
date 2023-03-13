@@ -7,10 +7,7 @@ import implementazioneDao.NuovaCollezioneDaoimpl;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -20,7 +17,6 @@ import java.sql.SQLException;
 
 public class GalleriaController {
     private @FXML Label nomeUtenteLabel;
-    private @FXML Button go;
     private @FXML Button nuovaFoto;
     private @FXML Button nuovaCollezione;
     private @FXML MenuButton temi;
@@ -39,9 +35,12 @@ public class GalleriaController {
 
             do {
                 String nomeLuogo = listaLuoghi.getString("nome");
-                CheckMenuItem luogo = new CheckMenuItem(nomeLuogo);
+                MenuItem luogo = new MenuItem(nomeLuogo);
+                luogo.setOnAction(actionEvent -> {
+                    galleriaDao.ordinaPerLuogo(String.valueOf(luogo));
+                });
 
-                luoghi.getItems().add(luogo);
+               luoghi.getItems().add(luogo);
             } while (listaLuoghi.next());
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -51,7 +50,10 @@ public class GalleriaController {
 
             do {
                 String nomeTema = listaTemi.getString("nome");
-                CheckMenuItem tema = new CheckMenuItem(nomeTema);
+                MenuItem tema = new MenuItem(nomeTema);
+                tema.setOnAction(actionEvent -> {
+                    galleriaDao.ordinaPerTema(String.valueOf(tema));
+                });
 
                 temi.getItems().add(tema);
             } while (listaTemi.next());
@@ -105,7 +107,7 @@ public class GalleriaController {
     }
 
     private @FXML void Luoghipiuimmortalati() {
-        if (luoghiPiuImmortalati.isSelected()) {
+
             Stage newStage = new Stage();
 
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LuoghiPiùImmortalati.fxml"));
@@ -123,6 +125,6 @@ public class GalleriaController {
             newStage.initModality(Modality.APPLICATION_MODAL);
             newStage.show();
 
-        }
+
     }
 }

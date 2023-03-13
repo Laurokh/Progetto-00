@@ -12,9 +12,9 @@ public class Connessione {
 
     private Connessione() throws SQLException {
         String driver= "org.postgresql.Driver";
-        String url= "jdbc:postgresql://localhost:5432/dataObj";
+        String url= "jdbc:postgresql://localhost:2232/dataObj";
         String username= "postgres";
-        String psw= "5656";
+        String psw= "2678";
 //
         try {
             Class.forName(driver);

@@ -63,7 +63,7 @@ public class GalleriaDaoimpl implements GalleriaDao {
     }
 
     public ResultSet ordinaPerLuogo(String nomeLuogo) {
-        String query= "SELECT * FROM Q1(NomeLuogo)";
+        String query= "SELECT * FROM Q1('"+nomeLuogo+"')";
         try {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);
@@ -82,7 +82,7 @@ public class GalleriaDaoimpl implements GalleriaDao {
 
 
     public ResultSet ordinaPerTema(String nomeTema) {
-        String query= "SELECT * FROM Q2(nomeTema)";
+        String query= "SELECT * FROM Q2('"+nomeTema+"')";
         try {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);
