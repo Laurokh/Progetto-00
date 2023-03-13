@@ -22,7 +22,7 @@ public class NuovaCollezione {
         ResultSet listautenti = dao.listautenti();
         try {
 
-            while (listautenti.next()) {
+            do {
                 String nomeUtente = listautenti.getString("username");
                 CheckMenuItem utente = new CheckMenuItem(nomeUtente);
                 utente.setOnAction(actionEvent -> {
@@ -35,7 +35,7 @@ public class NuovaCollezione {
                     }
                 });
                 listaUtenti.getItems().add(utente);
-            }
+            }while (listautenti.next());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
