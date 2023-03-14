@@ -96,10 +96,10 @@ public class NuovaFotoController {
 
     private @FXML void conferma() {
         NuovaFotoDaoimpl fotoDao = new NuovaFotoDaoimpl();
-
         Stage stage = (Stage) dispositivoMenuButton.getScene().getWindow();
-
         foto.setDataScatto(dataScatto.getValue());
+
+        //fotoDao.nuovafoto()
 
         stage.close();
     }

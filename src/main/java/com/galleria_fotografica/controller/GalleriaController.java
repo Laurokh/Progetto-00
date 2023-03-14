@@ -1,7 +1,7 @@
 package com.galleria_fotografica.controller;
 
 import com.galleria_fotografica.Main;
-import com.galleria_fotografica.model.Utente;
+import com.galleria_fotografica.model.*;
 import implementazioneDao.GalleriaDaoimpl;
 import implementazioneDao.NuovaCollezioneDaoimpl;
 import javafx.fxml.FXML;
@@ -12,8 +12,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class GalleriaController {
     private @FXML Label nomeUtenteLabel;
@@ -21,7 +23,12 @@ public class GalleriaController {
     private @FXML Button nuovaCollezione;
     private @FXML MenuButton temi;
     private @FXML MenuButton luoghi;
-    private @FXML CheckMenuItem luoghiPiuImmortalati;
+
+
+    private ArrayList<Foto> listaFoto;
+    private ArrayList<Collezione> listaCollezioni;
+    private ArrayList<Luogo> listaLuoghi;
+    private ArrayList<Tema> listaTemi;
 
     private Utente utente;
 
@@ -40,7 +47,7 @@ public class GalleriaController {
                     galleriaDao.ordinaPerLuogo(String.valueOf(luogo));
                 });
 
-               luoghi.getItems().add(luogo);
+                luoghi.getItems().add(luogo);
             } while (listaLuoghi.next());
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -108,22 +115,22 @@ public class GalleriaController {
 
     private @FXML void Luoghipiuimmortalati() {
 
-            Stage newStage = new Stage();
+        Stage newStage = new Stage();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LuoghiPiùImmortalati.fxml"));
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            newStage.setScene(scene);
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LuoghiPiùImmortalati.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        newStage.setScene(scene);
 
 
-            newStage.setTitle("Luoghi Più Immortalati");
-            newStage.setResizable(false);
-            newStage.initModality(Modality.APPLICATION_MODAL);
-            newStage.show();
+        newStage.setTitle("Luoghi Più Immortalati");
+        newStage.setResizable(false);
+        newStage.initModality(Modality.APPLICATION_MODAL);
+        newStage.show();
 
 
     }

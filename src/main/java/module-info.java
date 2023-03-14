@@ -5,6 +5,7 @@ module com.galleria_fotografica {
 
     opens com.galleria_fotografica to javafx.fxml;
     exports com.galleria_fotografica;
+    exports com.galleria_fotografica.model;
     exports com.galleria_fotografica.controller;
     opens com.galleria_fotografica.controller to javafx.fxml;
 }
