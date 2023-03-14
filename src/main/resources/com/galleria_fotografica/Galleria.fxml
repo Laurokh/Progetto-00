@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -25,7 +27,15 @@
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <ListView layoutX="8.0" layoutY="6.0" prefHeight="753.0" prefWidth="200.0" />
+                              <ListView fx:id="lista" layoutX="10.0" layoutY="63.0" prefHeight="543.0" prefWidth="193.0" />
+                              <MenuButton fx:id="collezione" layoutX="54.0" layoutY="14.0" mnemonicParsing="false" text="Collezione">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" text="Action 1" />
+                                  <MenuItem mnemonicParsing="false" text="Action 2" />
+                                </items>
+                              </MenuButton>
+                              <CheckBox fx:id="privata" layoutX="14.0" layoutY="632.0" mnemonicParsing="false" text="Privata" />
+                              <Button fx:id="eliminaFoto" layoutX="129.0" layoutY="627.0" mnemonicParsing="false" text="Elimina" />
                            </children>
                         </AnchorPane>
                     </items>
@@ -51,6 +61,7 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="755.0" prefWidth="1026.0">
                      <children>
                         <ListView layoutX="-2.0" prefHeight="777.0" prefWidth="1082.0" />
+                        <ImageView fitHeight="710.0" fitWidth="1044.0" layoutX="16.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </AnchorPane>
               </items>
