@@ -22,7 +22,7 @@ public class GalleriaController {
     private @FXML Button nuovaCollezione;
     private @FXML MenuButton temi;
     private @FXML MenuButton luoghi;
-    private @FXML ListView<Foto> lista;
+    private @FXML TableView<Foto> lista;
 
     private ArrayList<Foto> listaFoto = new ArrayList<>();
     private ArrayList<Collezione> listaCollezioni = new ArrayList<>();
@@ -96,7 +96,7 @@ public class GalleriaController {
                 ));
 
             }
-           // lista.getColumn().get(0).setCellValueFactory(new PropertyValueFactory<>("luogo"));
+            lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("luogo"));
             lista.getItems().addAll(listaFoto);
         } catch (SQLException e) {
             throw new RuntimeException(e);
