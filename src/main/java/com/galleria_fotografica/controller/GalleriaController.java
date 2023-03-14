@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -21,7 +22,7 @@ public class GalleriaController {
     private @FXML Button nuovaCollezione;
     private @FXML MenuButton temi;
     private @FXML MenuButton luoghi;
-    private @FXML ListView lista;
+    private @FXML ListView<Foto> lista;
 
     private ArrayList<Foto> listaFoto = new ArrayList<>();
     private ArrayList<Collezione> listaCollezioni = new ArrayList<>();
@@ -95,6 +96,7 @@ public class GalleriaController {
                 ));
 
             }
+           // lista.getColumn().get(0).setCellValueFactory(new PropertyValueFactory<>("luogo"));
             lista.getItems().addAll(listaFoto);
         } catch (SQLException e) {
             throw new RuntimeException(e);
