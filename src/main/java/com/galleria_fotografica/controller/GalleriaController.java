@@ -1,5 +1,5 @@
 package com.galleria_fotografica.controller;
-
+import com.galleria_fotografica.model.Tabella;
 import com.galleria_fotografica.Main;
 import com.galleria_fotografica.model.*;
 import implementazioneDao.GalleriaDaoimpl;
@@ -85,6 +85,8 @@ public class GalleriaController {
             throw new RuntimeException(e);
         }
 
+        ArrayList<Tabella> listaF = new ArrayList<>();
+
         try {
 
             while (listaFotoDao.next()) {
@@ -95,14 +97,18 @@ public class GalleriaController {
                         listaFotoDao.getDate("data_scatto").toLocalDate()
                 ));
 
+                listaF.add(new Tabella(
+
+                        listaFotoDao.getString("dispositivo")));
+
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
 
         }
-     //   lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("luogo"));
-        lista.getItems().addAll(listaFoto);
+     lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("dispositivo"));
+        lista.getItems().addAll(listaF);
 
     }
 

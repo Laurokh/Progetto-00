@@ -13,6 +13,9 @@ public class Tabella {
         return immortalazioni;
     }
 
+    public Tabella(String nome){
+        this.luogo = luogo;
+    }
     public Tabella(String luogo, int immortalazioni) {
         this.luogo = luogo;
         this.immortalazioni = immortalazioni;
