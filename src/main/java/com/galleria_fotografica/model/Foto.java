@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Foto {
-    private String id;
+    private int id;
     private String dispositivo;
     private boolean privata;
     private LocalDate data_scatto;
@@ -37,7 +37,7 @@ public class Foto {
         this.data_scatto = data_scatto;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -85,7 +85,7 @@ public class Foto {
 
     public Foto(int id, String dispositivo, boolean privata, LocalDate data_scatto) {
 
-        this.id = String.valueOf(id);
+        this.id = id;
         this.dispositivo = dispositivo;
         this.privata = privata;
         this.data_scatto = data_scatto;

@@ -21,7 +21,7 @@ public class GalleriaController {
     private @FXML Button nuovaCollezione;
     private @FXML MenuButton temi;
     private @FXML MenuButton luoghi;
-
+    private @FXML ListView lista;
 
     private ArrayList<Foto> listaFoto = new ArrayList<>();
     private ArrayList<Collezione> listaCollezioni = new ArrayList<>();
@@ -93,8 +93,9 @@ public class GalleriaController {
                         listaFotoDao.getBoolean("privata"),
                         listaFotoDao.getDate("data_scatto").toLocalDate()
                 ));
-            }
 
+            }
+            lista.getItems().addAll(listaFoto);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
