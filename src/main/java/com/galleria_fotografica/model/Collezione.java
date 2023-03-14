@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Collezione {
     private String nome;
-    private String id;
+    private int id;
     private LocalDate data_creazione;
 
 
@@ -25,7 +25,7 @@ public class Collezione {
         this.compone.removeIf(item -> item.equals(compone));
     }
 
-    public Collezione(String nome, String id, LocalDate data_creazione) {
+    public Collezione(String nome, int id, LocalDate data_creazione) {
         this.nome = nome;
         this.id = id;
         this.data_creazione = data_creazione;

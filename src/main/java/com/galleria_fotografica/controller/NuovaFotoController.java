@@ -2,6 +2,7 @@ package com.galleria_fotografica.controller;
 
 import com.galleria_fotografica.model.Foto;
 import com.galleria_fotografica.model.Luogo;
+import com.galleria_fotografica.model.Utente;
 import implementazioneDao.LuogoDaoimpl;
 import implementazioneDao.NuovaFotoDaoimpl;
 import implementazioneDao.TemaDaoimpl;
@@ -25,6 +26,7 @@ public class NuovaFotoController {
     private Foto foto = new Foto();
     private @FXML ImageView imageView;
 
+    private Utente utente;
 
     private @FXML void initialize() {
 
@@ -37,12 +39,13 @@ public class NuovaFotoController {
                 String nomeLuogo = rs2.getString("nome");
                 double lat = rs2.getDouble("latitudine");
                 double lng = rs2.getDouble("longitudine");
+                int id = rs2.getInt("idlougo");
 
                 MenuItem menuItem = new MenuItem(nomeLuogo);
                 menuItem.setOnAction(actionEvent -> {
                     luogolbl.setText(nomeLuogo);
 
-                    foto.setLuogo(new Luogo(nomeLuogo, lat, lng));
+                    foto.setLuogo(new Luogo(nomeLuogo, lat, lng, id));
                     latLbl.setText(String.valueOf(lat));
                     longLbl.setText(String.valueOf(lng));
                 });
@@ -101,8 +104,8 @@ public class NuovaFotoController {
         NuovaFotoDaoimpl fotoDao = new NuovaFotoDaoimpl();
         Stage stage = (Stage) dispositivoMenuButton.getScene().getWindow();
         foto.setDataScatto(dataScatto.getValue());
-
-        // fotoDao.nuovafoto();
+        utente= (Utente)stage.getUserData();
+        fotoDao.nuovafoto(foto.isPrivata(), utente.getId(), foto.getDispositivo(),foto.getData_scatto(),foto.getLuogo());
 
         stage.close();
         stage.setUserData(foto);

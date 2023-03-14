@@ -5,7 +5,6 @@ import javafx.stage.FileChooser;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Foto {
     private String id;
@@ -36,6 +35,34 @@ public class Foto {
 
     public void setDataScatto(LocalDate data_scatto) {
         this.data_scatto = data_scatto;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getDispositivo() {
+        return dispositivo;
+    }
+
+    public boolean isPrivata() {
+        return privata;
+    }
+
+    public LocalDate getData_scatto() {
+        return data_scatto;
+    }
+
+    public Luogo getLuogo() {
+        return luogo;
+    }
+
+    public Utente getScattata_da() {
+        return scattata_da;
+    }
+
+    public ArrayList<String> getTemi() {
+        return temi;
     }
 
     public String scegliFoto() {

@@ -36,7 +36,7 @@ public class LuoghiPiuImmortalati {
 
 
             }
-        } catch (SQLException e) {
+        } catch (SQLException ignore) {
         }
 
 

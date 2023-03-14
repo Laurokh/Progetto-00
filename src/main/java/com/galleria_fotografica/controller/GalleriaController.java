@@ -23,10 +23,10 @@ public class GalleriaController {
     private @FXML MenuButton luoghi;
 
 
-    private ArrayList<Foto> listaFoto= new ArrayList<>();
-    private ArrayList<Collezione> listaCollezioni=new ArrayList<>();
-    private ArrayList<Luogo> listaLuoghi=new ArrayList<>();
-    private ArrayList<Tema> listaTemi=new ArrayList<>();
+    private ArrayList<Foto> listaFoto = new ArrayList<>();
+    private ArrayList<Collezione> listaCollezioni = new ArrayList<>();
+    private ArrayList<Luogo> listaLuoghi = new ArrayList<>();
+    private ArrayList<Tema> listaTemi = new ArrayList<>();
 
     private final Utente utente;
 
@@ -39,15 +39,16 @@ public class GalleriaController {
         GalleriaDaoimpl galleriaDao = new GalleriaDaoimpl();
         ResultSet listaTemiDao = galleriaDao.listaTemi();
         ResultSet listaLuoghiDao = galleriaDao.listaLuoghi();
-        ResultSet listaFotoDao= galleriaDao.listaFoto(utente.getId());
+        ResultSet listaFotoDao = galleriaDao.listaFoto(utente.getId());
         try {
 
             while (listaLuoghiDao.next()) {
                 listaLuoghi.add(new Luogo(
-                   listaLuoghiDao.getString("nome"),
-                   listaLuoghiDao.getDouble("latitudine"),
-                   listaLuoghiDao.getDouble("longitudine")
-                ));
+                        listaLuoghiDao.getString("nome"),
+                        listaLuoghiDao.getDouble("latitudine"),
+                        listaLuoghiDao.getDouble("longitudine"),
+                        listaLuoghiDao.getInt("idluogo")
+                        ));
 
                 String nomeLuogo = listaLuoghiDao.getString("nome");
                 MenuItem luogo = new MenuItem(nomeLuogo);
@@ -63,7 +64,7 @@ public class GalleriaController {
 
         try {
 
-            while (listaLuoghiDao.next()){
+            while (listaLuoghiDao.next()) {
                 listaTemi.add(new Tema(
                         listaLuoghiDao.getInt("idluogo"),
                         listaLuoghiDao.getString("descrizione"),
@@ -85,7 +86,7 @@ public class GalleriaController {
 
         try {
 
-            while (listaFotoDao.next()){
+            while (listaFotoDao.next()) {
                 listaFoto.add(new Foto(
                         listaFotoDao.getInt("idfoto"),
                         listaFotoDao.getString("dispositivo"),
@@ -118,8 +119,9 @@ public class GalleriaController {
         newStage.setTitle("Nuova foto");
         newStage.setResizable(false);
         newStage.initModality(Modality.APPLICATION_MODAL);
+        newStage.setUserData(utente);
         newStage.showAndWait();
-        listaFoto.add((Foto)newStage.getUserData());
+        listaFoto.add((Foto) newStage.getUserData());
 
 
     }
@@ -141,7 +143,8 @@ public class GalleriaController {
         newStage.setTitle("Nuova collezione");
         newStage.setResizable(false);
         newStage.initModality(Modality.APPLICATION_MODAL);
-        newStage.show();
+        newStage.showAndWait();
+        listaCollezioni.add((Collezione) newStage.getUserData());
 
     }
 

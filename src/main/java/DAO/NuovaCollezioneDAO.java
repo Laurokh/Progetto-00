@@ -4,8 +4,8 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 
 public interface NuovaCollezioneDAO {
-    public ResultSet listautenti ();
-    public ResultSet nuovaCollezione(String nome, LocalDate data);
+    ResultSet listautenti ();
+    ResultSet nuovaCollezione(String nome, LocalDate data);
 
 
 }
