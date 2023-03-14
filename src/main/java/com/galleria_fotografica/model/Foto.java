@@ -3,9 +3,9 @@ package com.galleria_fotografica.model;
 
 import javafx.stage.FileChooser;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Foto {
     private String id;
@@ -13,7 +13,6 @@ public class Foto {
     private boolean privata;
     private LocalDate data_scatto;
     private Luogo luogo;
-
 
 
     private Utente scattata_da;
@@ -24,7 +23,6 @@ public class Foto {
     private ArrayList<Utente> rappresenta = new ArrayList<>();
 
     public Foto() {
-
     }
 
 
@@ -36,10 +34,11 @@ public class Foto {
         this.privata = privata;
     }
 
-    public void setDataScatto(LocalDate data_scatto) { this.data_scatto= data_scatto;
+    public void setDataScatto(LocalDate data_scatto) {
+        this.data_scatto = data_scatto;
     }
 
-    public void scegliFoto() {
+    public String scegliFoto() {
 
         FileChooser fileChooser = new FileChooser();
 
@@ -49,23 +48,23 @@ public class Foto {
 
 
         java.io.File foto = fileChooser.showOpenDialog(null);
-
         if (foto != null) {
-            //todo chiedi qua
+            return foto.getPath();
+        } else {
+            return null;
         }
     }
 
 
+    public Foto(int id, String dispositivo, boolean privata, LocalDate data_scatto) {
 
-    public Foto(String id, String dispositivo, boolean privata, LocalDate data_scatto) {
-        this.id = id;
+        this.id = String.valueOf(id);
         this.dispositivo = dispositivo;
         this.privata = privata;
         this.data_scatto = data_scatto;
         //todo vedi this.File= null;
 
     }
-
 
 
     public void setscattata_da(Utente scattata_da) {
@@ -76,8 +75,8 @@ public class Foto {
         this.temi.add(tema);
     }
 
-    public void togliTema (String tema){
-        this.temi.removeIf(item-> item.equals(tema));
+    public void togliTema(String tema) {
+        this.temi.removeIf(item -> item.equals(tema));
     }
 
     public void addcompone(Compone compone) {

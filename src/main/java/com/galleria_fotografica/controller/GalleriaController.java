@@ -3,7 +3,6 @@ package com.galleria_fotografica.controller;
 import com.galleria_fotografica.Main;
 import com.galleria_fotografica.model.*;
 import implementazioneDao.GalleriaDaoimpl;
-import implementazioneDao.NuovaCollezioneDaoimpl;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,7 +11,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,45 +23,77 @@ public class GalleriaController {
     private @FXML MenuButton luoghi;
 
 
-    private ArrayList<Foto> listaFoto;
-    private ArrayList<Collezione> listaCollezioni;
-    private ArrayList<Luogo> listaLuoghi;
-    private ArrayList<Tema> listaTemi;
+    private ArrayList<Foto> listaFoto= new ArrayList<>();
+    private ArrayList<Collezione> listaCollezioni=new ArrayList<>();
+    private ArrayList<Luogo> listaLuoghi=new ArrayList<>();
+    private ArrayList<Tema> listaTemi=new ArrayList<>();
 
-    private Utente utente;
+    private final Utente utente;
+
+    public GalleriaController(Utente utente) {
+        this.utente = utente;
+    }
 
     private @FXML void initialize() {
-        // utente = (Utente)nomeUtenteLabel.getScene().getWindow().getUserData();
-        nomeUtenteLabel.setText("utente");
+        nomeUtenteLabel.setText(utente.getNickname());
         GalleriaDaoimpl galleriaDao = new GalleriaDaoimpl();
-        ResultSet listaTemi = galleriaDao.listaTemi();
-        ResultSet listaLuoghi = galleriaDao.listaLuoghi();
+        ResultSet listaTemiDao = galleriaDao.listaTemi();
+        ResultSet listaLuoghiDao = galleriaDao.listaLuoghi();
+        ResultSet listaFotoDao= galleriaDao.listaFoto(utente.getId());
         try {
 
-            do {
-                String nomeLuogo = listaLuoghi.getString("nome");
+            while (listaLuoghiDao.next()) {
+                listaLuoghi.add(new Luogo(
+                   listaLuoghiDao.getString("nome"),
+                   listaLuoghiDao.getDouble("latitudine"),
+                   listaLuoghiDao.getDouble("longitudine")
+                ));
+
+                String nomeLuogo = listaLuoghiDao.getString("nome");
                 MenuItem luogo = new MenuItem(nomeLuogo);
                 luogo.setOnAction(actionEvent -> {
                     galleriaDao.ordinaPerLuogo(String.valueOf(luogo));
                 });
 
                 luoghi.getItems().add(luogo);
-            } while (listaLuoghi.next());
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         try {
 
-            do {
-                String nomeTema = listaTemi.getString("nome");
+            while (listaLuoghiDao.next()){
+                listaTemi.add(new Tema(
+                        listaLuoghiDao.getInt("idluogo"),
+                        listaLuoghiDao.getString("descrizione"),
+                        listaLuoghiDao.getString("nome")
+                ));
+
+                String nomeTema = listaTemiDao.getString("nome");
                 MenuItem tema = new MenuItem(nomeTema);
+
                 tema.setOnAction(actionEvent -> {
                     galleriaDao.ordinaPerTema(String.valueOf(tema));
                 });
 
                 temi.getItems().add(tema);
-            } while (listaTemi.next());
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+
+            while (listaFotoDao.next()){
+                listaFoto.add(new Foto(
+                        listaFotoDao.getInt("idfoto"),
+                        listaFotoDao.getString("dispositivo"),
+                        listaFotoDao.getBoolean("privata"),
+                        listaFotoDao.getDate("data_scatto").toLocalDate()
+                ));
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -88,7 +118,9 @@ public class GalleriaController {
         newStage.setTitle("Nuova foto");
         newStage.setResizable(false);
         newStage.initModality(Modality.APPLICATION_MODAL);
-        newStage.show();
+        newStage.showAndWait();
+        listaFoto.add((Foto)newStage.getUserData());
+
 
     }
 

@@ -16,12 +16,7 @@ public class LoginDaoimpl implements LoginDAO {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);
             db.connessione.close();
-            if (rs.next()) {
-                return rs;
-            } else {
-                return null;
-            }
-
+            return rs;
         } catch (
                 SQLException e) {
             throw new RuntimeException(e);

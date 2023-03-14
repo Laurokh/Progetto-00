@@ -35,10 +35,10 @@
             <TextField fx:id="longLbl" layoutX="287.0" layoutY="321.0" prefHeight="25.0" prefWidth="114.0" />
             <Button layoutX="253.0" layoutY="360.0" mnemonicParsing="false" onAction="#conferma" text="Conferma" />
             <Button layoutX="341.0" layoutY="360.0" mnemonicParsing="false" onAction="#annulla" text="Annulla" />
-            <ImageView fitHeight="226.0" fitWidth="391.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imageView" fitHeight="226.0" fitWidth="391.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
             <DatePicker fx:id="dataScatto" layoutX="315.0" layoutY="277.0" prefHeight="25.0" prefWidth="90.0" promptText="Data" />
-            <Button fx:id="selFoto" layoutX="108.0" layoutY="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="203.0" text="Seleziona immagine" onAction="#sFoto" />
-            <MenuButton fx:id="luogolbl" layoutX="7.0" layoutY="277.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Luogo"  />
+            <Button fx:id="selFoto" layoutX="108.0" layoutY="239.0" mnemonicParsing="false" onAction="#sFoto" prefHeight="25.0" prefWidth="203.0" text="Seleziona immagine" />
+            <MenuButton fx:id="luogolbl" layoutX="7.0" layoutY="277.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Luogo" />
             <Button fx:id="fotoPublica" layoutX="24.0" layoutY="360.0" mnemonicParsing="false" onAction="#setPublica" text="Publica" />
             <Button fx:id="fotoPrivata" layoutX="104.0" layoutY="360.0" mnemonicParsing="false" onAction="#setPrivata" text="Privata" />
             <MenuButton fx:id="temalbl" layoutX="104.0" layoutY="277.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Tema" />

@@ -7,6 +7,8 @@ import implementazioneDao.NuovaFotoDaoimpl;
 import implementazioneDao.TemaDaoimpl;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.sql.ResultSet;
@@ -21,6 +23,7 @@ public class NuovaFotoController {
     private @FXML TextField latLbl;
     private @FXML TextField longLbl;
     private Foto foto = new Foto();
+    private @FXML ImageView imageView;
 
 
     private @FXML void initialize() {
@@ -99,9 +102,10 @@ public class NuovaFotoController {
         Stage stage = (Stage) dispositivoMenuButton.getScene().getWindow();
         foto.setDataScatto(dataScatto.getValue());
 
-        //fotoDao.nuovafoto()
+        // fotoDao.nuovafoto();
 
         stage.close();
+        stage.setUserData(foto);
     }
 
 
@@ -110,7 +114,13 @@ public class NuovaFotoController {
         stage.close();
     }
 
-    private @FXML void sFoto () { foto.scegliFoto();   }
+    private @FXML void sFoto() {
+        String url = foto.scegliFoto();
+        if(url == null) return;
+
+        imageView.setImage(new Image(url));
+
+    }
 
 
 }

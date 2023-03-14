@@ -30,28 +30,30 @@ public class LoginController {
         LoginDaoimpl dao = new LoginDaoimpl();
         ResultSet rs = dao.login(campoNome.getText(), campoPsw.getText());
 
-        if (rs != null) {
+        if (rs.next()) {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Galleria.fxml"));
+            utente = new Utente(rs.getString("username"), rs.getInt("idutente"));
 
-            Scene scene = null;
+            Scene scene ;
             try {
-
+                fxmlLoader.setControllerFactory(e -> new GalleriaController(utente));
                 scene = new Scene(fxmlLoader.load());
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            utente= new Utente(rs.getString("username"), rs.getInt("idutente"));
 
             newStage.setScene(scene);
-            newStage.setUserData(utente);
             oldStage.close();
 
 
             newStage.setTitle("Galleria");
             newStage.setResizable(false);
             newStage.show();
-        } else {testo.setText("Nome utente o Password errata");};
+        } else {
+            testo.setText("Nome utente o Password errata");
+        }
+        ;
     }
 
 
