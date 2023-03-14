@@ -101,7 +101,7 @@ public class GalleriaController {
             throw new RuntimeException(e);
 
         }
-        lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("luogo"));
+     //   lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("luogo"));
         lista.getItems().addAll(listaFoto);
 
     }
