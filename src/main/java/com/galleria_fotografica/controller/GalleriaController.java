@@ -96,11 +96,13 @@ public class GalleriaController {
                 ));
 
             }
-            lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("luogo"));
-            lista.getItems().addAll(listaFoto);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
+
         }
+        lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("luogo"));
+        lista.getItems().addAll(listaFoto);
 
     }
 
