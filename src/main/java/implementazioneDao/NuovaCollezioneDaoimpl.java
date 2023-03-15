@@ -28,9 +28,24 @@ public class NuovaCollezioneDaoimpl implements NuovaCollezioneDAO {
     }
 
 
+    public void newPartecipazione (int idutente, int idCollezione){
+        String query = "INSERT INTO partecipa_a VALUES ('" + idutente + "','" + idCollezione + "' )";
+
+        ResultSet rs;
+        try {
+            Connessione db = Connessione.getInstanza();
+            rs = db.connessione.createStatement().executeQuery(query);
+            db.connessione.close();
+        } catch (
+                SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
 
-    public ResultSet nuovaCollezione(String nome, LocalDate data) {
+
+    public void nuovaCollezione(String nome, LocalDate data) {
         String query = "INSERT INTO Collezione VALUES (DEFAULT,'" + nome + "','" + data + "' )";
 
         ResultSet rs;
@@ -42,6 +57,6 @@ public class NuovaCollezioneDaoimpl implements NuovaCollezioneDAO {
                 SQLException e) {
             throw new RuntimeException(e);
         }
-        return rs;
+
     }
 }

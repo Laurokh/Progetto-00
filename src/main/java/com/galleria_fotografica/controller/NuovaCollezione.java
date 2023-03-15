@@ -6,13 +6,16 @@ import implementazioneDao.NuovaCollezioneDaoimpl;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class NuovaCollezione {
 
+    private @FXML TextField nomeCollezione;
     private @FXML MenuButton listaUtenti;
     private Collezione collezione = new Collezione();
 
@@ -46,7 +49,12 @@ public class NuovaCollezione {
 
 
     private @FXML void conferma() {
+        LocalDate date = LocalDate.now();
+        NuovaCollezioneDaoimpl nuovaCollezione = new NuovaCollezioneDaoimpl();
         Stage stage = (Stage) listaUtenti.getScene().getWindow();
+
+        nuovaCollezione.nuovaCollezione(nomeCollezione.getText(),date);
+
 
         stage.close();
     }
