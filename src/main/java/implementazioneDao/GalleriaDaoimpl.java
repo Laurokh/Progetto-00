@@ -14,11 +14,9 @@ public class GalleriaDaoimpl implements GalleriaDao {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);
             db.connessione.close();
-            if (rs.next()) {
+
                 return rs;
-            } else {
-                return rs ;
-            }
+
 
         } catch (
                 SQLException e) {
@@ -74,17 +72,30 @@ public class GalleriaDaoimpl implements GalleriaDao {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);
             db.connessione.close();
-            if (rs.next()) {
+
                 return rs;
-            } else {
-                return null ;
-            }
 
         } catch (
                 SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+    public ResultSet listaCollezioni (int id){
+        String query= "select * from collezione as c natural join partecipa_a where partecipa_a.idutente = '"+id+"'";
+        try {
+            Connessione db = Connessione.getInstanza();
+            ResultSet rs = db.connessione.createStatement().executeQuery(query);
+            db.connessione.close();
+
+            return rs;
+
+        } catch (
+                SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
     public ResultSet ordinaPerTema(String nomeTema) {

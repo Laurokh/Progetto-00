@@ -13,5 +13,9 @@ public interface GalleriaDao {
 
     ResultSet ordinaPerTema (String nomeTema);
 
+    ResultSet listaCollezioni (int id);
+
+    ResultSet listaFoto(int uId);
+
 
 }

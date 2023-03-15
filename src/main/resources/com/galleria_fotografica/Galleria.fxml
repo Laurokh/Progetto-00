@@ -31,7 +31,7 @@
                            <children>
                               <TableView fx:id="lista" layoutX="10.0" layoutY="63.0" prefHeight="543.0" prefWidth="193.0">
                                  <columns>
-                                    <TableColumn prefWidth="192.9056671002704" />
+                                    <TableColumn fx:id="colonna" prefWidth="192.9056671002704" />
                                  </columns></TableView>
                               <MenuButton fx:id="collezione" layoutX="54.0" layoutY="14.0" mnemonicParsing="false" text="Collezione">
                                 <items>

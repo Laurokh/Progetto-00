@@ -41,6 +41,9 @@ public class GalleriaController {
         ResultSet listaTemiDao = galleriaDao.listaTemi();
         ResultSet listaLuoghiDao = galleriaDao.listaLuoghi();
         ResultSet listaFotoDao = galleriaDao.listaFoto(utente.getId());
+        ArrayList<String> listaF = new ArrayList<>();
+
+
         try {
 
             while (listaLuoghiDao.next()) {
@@ -85,7 +88,7 @@ public class GalleriaController {
             throw new RuntimeException(e);
         }
 
-        ArrayList<Tabella> listaF = new ArrayList<>();
+
 
         try {
 
@@ -97,9 +100,9 @@ public class GalleriaController {
                         listaFotoDao.getDate("data_scatto").toLocalDate()
                 ));
 
-                listaF.add(new Tabella(
+                listaF.add(listaFotoDao.getString("dispositivo"));
 
-                        listaFotoDao.getString("dispositivo")));
+
 
             }
 
@@ -107,8 +110,11 @@ public class GalleriaController {
             throw new RuntimeException(e);
 
         }
-     lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("dispositivo"));
-        lista.getItems().addAll(listaF);
+        lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>(""));
+        lista.getItems().addAll((ArrayList)listaF);
+
+
+
 
     }
 
