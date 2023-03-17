@@ -24,6 +24,8 @@ public class NuovaFotoController {
     private @FXML TextField latLbl;
     private @FXML TextField longLbl;
     private Foto foto = new Foto();
+
+    private  @FXML TextField nome;
     private @FXML ImageView imageView;
 
     private Utente utente;
@@ -101,11 +103,12 @@ public class NuovaFotoController {
 
 
     private @FXML void conferma() {
+
         NuovaFotoDaoimpl fotoDao = new NuovaFotoDaoimpl();
         Stage stage = (Stage) dispositivoMenuButton.getScene().getWindow();
         foto.setDataScatto(dataScatto.getValue());
         utente= (Utente)stage.getUserData();
-        fotoDao.nuovafoto(foto.isPrivata(), utente.getId(), foto.getDispositivo(),foto.getData_scatto(),foto.getLuogo());
+        fotoDao.nuovafoto(String.valueOf(nome.getScene().getWindow()),foto.isPrivata(), utente.getId(), foto.getDispositivo(),foto.getData_scatto(),foto.getLuogo());
 
         stage.close();
         stage.setUserData(foto);

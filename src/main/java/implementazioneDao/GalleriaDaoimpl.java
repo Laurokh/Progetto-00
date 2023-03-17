@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class GalleriaDaoimpl implements GalleriaDao {
 
     public ResultSet listaFoto(int uId){
-        String query= "SELECT * FROM foto where idfoto = '"+uId+"'";
+        String query= "SELECT * FROM foto where idutente = '"+uId+"'";
         try {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);

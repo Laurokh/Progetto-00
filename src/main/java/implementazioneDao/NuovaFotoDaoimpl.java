@@ -10,8 +10,8 @@ import java.time.LocalDate;
 public class NuovaFotoDaoimpl implements NuovafotoDao {
 
     @Override
-    public void nuovafoto(Boolean privata, Integer utente, String dispositivo, LocalDate data, Luogo luogo) {
-        String query = "INSERT INTO Foto VALUES (DEFAULT, '" + privata + "','" + utente + "','" + dispositivo + "','" + data + "', '" + luogo.getIdLuogo() + "')";
+    public void nuovafoto(String nome,Boolean privata, Integer utente, String dispositivo, LocalDate data, Luogo luogo) {
+        String query = "INSERT INTO Foto VALUES ('"+nome+"',DEFAULT, '" + privata + "','" + utente + "','" + dispositivo + "','" + data + "', '" + luogo.getIdLuogo() + "')";
         try {
             Connessione db = Connessione.getInstanza();
              db.connessione.createStatement().executeQuery(query);

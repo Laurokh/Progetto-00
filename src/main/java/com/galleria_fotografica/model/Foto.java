@@ -13,6 +13,7 @@ public class Foto {
     private LocalDate data_scatto;
     private Luogo luogo;
 
+    private String nome;
 
     private Utente scattata_da;
 
@@ -83,8 +84,8 @@ public class Foto {
     }
 
 
-    public Foto(int id, String dispositivo, boolean privata, LocalDate data_scatto) {
-
+    public Foto(String nome,int id, String dispositivo, boolean privata, LocalDate data_scatto) {
+        this.nome= nome ;
         this.id = id;
         this.dispositivo = dispositivo;
         this.privata = privata;

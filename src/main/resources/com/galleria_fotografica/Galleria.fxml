@@ -31,9 +31,9 @@
                            <children>
                               <TableView fx:id="lista" layoutX="10.0" layoutY="63.0" prefHeight="543.0" prefWidth="193.0">
                                  <columns>
-                                    <TableColumn fx:id="colonna" prefWidth="192.9056671002704" />
+                                    <TableColumn fx:id="foto" prefWidth="192.9056671002704" text="Foto" />
                                  </columns></TableView>
-                              <MenuButton fx:id="listaCollezioni" layoutX="39.0" layoutY="14.0" mnemonicParsing="false" text="Lista Collezioni" />
+                              <MenuButton fx:id="listeCollezioni" layoutX="39.0" layoutY="14.0" mnemonicParsing="false" text="Lista Collezioni" />
                               <CheckBox fx:id="privata" layoutX="72.0" layoutY="618.0" mnemonicParsing="false" text="Privata" />
                               <Button fx:id="eliminaFoto" layoutX="14.0" layoutY="657.0" mnemonicParsing="false" text="Elimina" />
                               <MenuButton fx:id="collezioni" layoutX="100.0" layoutY="657.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="102.0" text="Collezioni">

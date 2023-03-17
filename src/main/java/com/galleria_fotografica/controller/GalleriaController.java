@@ -1,4 +1,5 @@
 package com.galleria_fotografica.controller;
+
 import com.galleria_fotografica.model.Tabella;
 import com.galleria_fotografica.Main;
 import com.galleria_fotografica.model.*;
@@ -22,9 +23,12 @@ public class GalleriaController {
     private @FXML Button nuovaCollezione;
     private @FXML MenuButton temi;
     private @FXML MenuButton luoghi;
-    private @FXML TableView<Foto> lista;
+    private @FXML TableView<TabellaFoto> lista;
+
+
 
     private ArrayList<Foto> listaFoto = new ArrayList<>();
+
     private ArrayList<Collezione> listaCollezioni = new ArrayList<>();
     private ArrayList<Luogo> listaLuoghi = new ArrayList<>();
     private ArrayList<Tema> listaTemi = new ArrayList<>();
@@ -41,7 +45,7 @@ public class GalleriaController {
         ResultSet listaTemiDao = galleriaDao.listaTemi();
         ResultSet listaLuoghiDao = galleriaDao.listaLuoghi();
         ResultSet listaFotoDao = galleriaDao.listaFoto(utente.getId());
-        ArrayList<String> listaF = new ArrayList<>();
+        ArrayList<TabellaFoto> listaF = new ArrayList<>();
 
 
         try {
@@ -52,7 +56,7 @@ public class GalleriaController {
                         listaLuoghiDao.getDouble("latitudine"),
                         listaLuoghiDao.getDouble("longitudine"),
                         listaLuoghiDao.getInt("idluogo")
-                        ));
+                ));
 
                 String nomeLuogo = listaLuoghiDao.getString("nome");
                 MenuItem luogo = new MenuItem(nomeLuogo);
@@ -68,11 +72,11 @@ public class GalleriaController {
 
         try {
 
-            while (listaLuoghiDao.next()) {
+            while (listaTemiDao.next()) {
                 listaTemi.add(new Tema(
-                        listaLuoghiDao.getInt("idluogo"),
-                        listaLuoghiDao.getString("descrizione"),
-                        listaLuoghiDao.getString("nome")
+                        listaTemiDao.getInt("idtema"),
+                        listaTemiDao.getString("descrizione"),
+                        listaTemiDao.getString("nome")
                 ));
 
                 String nomeTema = listaTemiDao.getString("nome");
@@ -89,30 +93,36 @@ public class GalleriaController {
         }
 
 
-
         try {
 
             while (listaFotoDao.next()) {
                 listaFoto.add(new Foto(
+                        listaFotoDao.getString("nome"),
                         listaFotoDao.getInt("idfoto"),
                         listaFotoDao.getString("dispositivo"),
                         listaFotoDao.getBoolean("privata"),
                         listaFotoDao.getDate("data_scatto").toLocalDate()
                 ));
-
-                listaF.add(listaFotoDao.getString("dispositivo"));
-
-
-
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
 
         }
-        lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>(""));
-        lista.getItems().addAll((ArrayList)listaF);
+        ResultSet listaDao = galleriaDao.listaFoto(utente.getId());
 
+        try {
+            while (listaDao.next()) {
+
+                listaF.add(new TabellaFoto( listaDao.getString("nome")));
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
+        lista.getItems().addAll(listaF);
 
 
 
