@@ -23,7 +23,7 @@ public class GalleriaController {
     private @FXML Button nuovaCollezione;
     private @FXML MenuButton temi;
     private @FXML MenuButton luoghi;
-    private @FXML MenuButton collezioni;
+    private @FXML MenuButton listacollezioni;
     private @FXML TableView<TabellaFoto> lista;
 
 
@@ -131,14 +131,16 @@ public class GalleriaController {
             while (listaCollezioniDao.next()) {
                 listaCollezioni.add(new Collezione(
                         listaCollezioniDao.getString("nome"),
-                        listaCollezioniDao.getInt("id"),
+                        listaCollezioniDao.getInt("idCollezione"),
                         listaCollezioniDao.getDate("data_creazione").toLocalDate()
                         ));
+
+
                 String nomeCollezione = listaCollezioniDao.getString("nome");
                 MenuItem collezione = new MenuItem(nomeCollezione);
 
 
-                collezioni.getItems().add(collezione);
+              //  listacollezioni.getItems().add(collezione);
             }
 
         }catch (SQLException e) {
