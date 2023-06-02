@@ -23,6 +23,7 @@ public class GalleriaController {
     private @FXML Button nuovaCollezione;
     private @FXML MenuButton temi;
     private @FXML MenuButton luoghi;
+    private @FXML MenuButton collezioni;
     private @FXML TableView<TabellaFoto> lista;
 
 
@@ -131,12 +132,15 @@ public class GalleriaController {
                 listaCollezioni.add(new Collezione(
                         listaCollezioniDao.getString("nome"),
                         listaCollezioniDao.getInt("id"),
-                        listaCollezioniDao.getDate("data_creazione"),
+                        listaCollezioniDao.getDate("data_creazione").toLocalDate()
                         ));
                 String nomeCollezione = listaCollezioniDao.getString("nome");
                 MenuItem collezione = new MenuItem(nomeCollezione);
 
+
+                collezioni.getItems().add(collezione);
             }
+
         }catch (SQLException e) {
             throw new RuntimeException(e);
 

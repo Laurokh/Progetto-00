@@ -34,14 +34,8 @@
                                     <TableColumn fx:id="foto" prefWidth="192.9056671002704" text="Foto" />
                                  </columns></TableView>
                               <MenuButton fx:id="listeCollezioni" layoutX="39.0" layoutY="14.0" mnemonicParsing="false" text="Lista Collezioni" />
-                              <CheckBox fx:id="privata" layoutX="72.0" layoutY="618.0" mnemonicParsing="false" text="Privata" />
-                              <Button fx:id="eliminaFoto" layoutX="14.0" layoutY="657.0" mnemonicParsing="false" text="Elimina" />
-                              <MenuButton fx:id="collezioni" layoutX="100.0" layoutY="657.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="102.0" text="Collezioni">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                                  <MenuItem mnemonicParsing="false" text="Action 2" />
-                                </items>
-                              </MenuButton>
+                              <CheckBox fx:id="privata" layoutX="128.0" layoutY="616.0" mnemonicParsing="false" text="Privata" />
+                              <Button fx:id="eliminaFoto" layoutX="23.0" layoutY="612.0" mnemonicParsing="false" text="Elimina" />
                            </children>
                         </AnchorPane>
                     </items>
