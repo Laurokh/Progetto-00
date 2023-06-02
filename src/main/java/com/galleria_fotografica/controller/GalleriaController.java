@@ -33,6 +33,7 @@ public class GalleriaController {
     private ArrayList<Luogo> listaLuoghi = new ArrayList<>();
     private ArrayList<Tema> listaTemi = new ArrayList<>();
 
+
     private final Utente utente;
 
     public GalleriaController(Utente utente) {
@@ -45,6 +46,7 @@ public class GalleriaController {
         ResultSet listaTemiDao = galleriaDao.listaTemi();
         ResultSet listaLuoghiDao = galleriaDao.listaLuoghi();
         ResultSet listaFotoDao = galleriaDao.listaFoto(utente.getId());
+        ResultSet listaCollezioniDao = galleriaDao.listaCollezioni(utente.getId());
         ArrayList<TabellaFoto> listaF = new ArrayList<>();
 
 
@@ -124,8 +126,21 @@ public class GalleriaController {
         lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
         lista.getItems().addAll(listaF);
 
+        try {
+            while (listaCollezioniDao.next()) {
+                listaCollezioni.add(new Collezione(
+                        listaCollezioniDao.getString("nome"),
+                        listaCollezioniDao.getInt("id"),
+                        listaCollezioniDao.getDate("data_creazione"),
+                        ));
+                String nomeCollezione = listaCollezioniDao.getString("nome");
+                MenuItem collezione = new MenuItem(nomeCollezione);
 
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
 
+        }
     }
 
 
