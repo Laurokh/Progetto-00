@@ -3,7 +3,11 @@ package com.galleria_fotografica.controller;
 import com.galleria_fotografica.model.Tabella;
 import com.galleria_fotografica.Main;
 import com.galleria_fotografica.model.*;
+import com.sun.glass.ui.Menu;
 import implementazioneDao.GalleriaDaoimpl;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,7 +27,7 @@ public class GalleriaController {
     private @FXML Button nuovaCollezione;
     private @FXML MenuButton temi;
     private @FXML MenuButton luoghi;
-    private @FXML MenuButton listacollezioni;
+    private @FXML MenuButton Collezioni;
     private @FXML TableView<TabellaFoto> lista;
 
 
@@ -86,7 +90,8 @@ public class GalleriaController {
                 MenuItem tema = new MenuItem(nomeTema);
 
                 tema.setOnAction(actionEvent -> {
-                    galleriaDao.ordinaPerTema(String.valueOf(tema));
+
+
                 });
 
                 temi.getItems().add(tema);
@@ -139,8 +144,10 @@ public class GalleriaController {
                 String nomeCollezione = listaCollezioniDao.getString("nome");
                 MenuItem collezione = new MenuItem(nomeCollezione);
 
+                collezione.setOnAction(actionEvent -> {
 
-              //  listacollezioni.getItems().add(collezione);
+                });
+              Collezioni.getItems().add(collezione);
             }
 
         }catch (SQLException e) {
