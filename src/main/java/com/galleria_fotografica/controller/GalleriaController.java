@@ -92,6 +92,7 @@ public class GalleriaController {
                 tema.setOnAction(actionEvent -> {
 
 
+
                 });
 
                 temi.getItems().add(tema);

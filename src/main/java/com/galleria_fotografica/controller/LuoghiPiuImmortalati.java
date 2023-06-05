@@ -3,9 +3,12 @@ package com.galleria_fotografica.controller;
 import com.galleria_fotografica.model.Tabella;
 import implementazioneDao.GalleriaDaoimpl;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -20,32 +23,38 @@ public class LuoghiPiuImmortalati {
     private @FXML Button Chiudi;
     private @FXML TableView<Tabella> tabella;
 
-    private @FXML void initialize() {
+    private @FXML void initialize() {  TableColumn<Tabella, String> luogoColonna = new TableColumn<>("Luogo");
+        luogoColonna.setCellValueFactory(new PropertyValueFactory<>("luogo"));
 
+        TableColumn<Tabella, Integer> immortalazioniColonna = new TableColumn<>("Immortalazioni");
+        immortalazioniColonna.setCellValueFactory(new PropertyValueFactory<>("immortalazioni"));
+
+        tabella.getColumns().addAll(luogoColonna, immortalazioniColonna);
+
+        ObservableList<Tabella> tabellaDaVisualizzare = getDatiTabella();
+
+        tabella.setItems(tabellaDaVisualizzare);
+    }
+
+    private ObservableList<Tabella> getDatiTabella() {
         GalleriaDaoimpl foto = new GalleriaDaoimpl();
         ResultSet tab = foto.luoghiPiuImmoratlati();
-        ArrayList<Tabella> tabellaDaVisualizzare= new ArrayList<>();
+        ObservableList<Tabella> tabellaDaVisualizzare = FXCollections.observableArrayList();
 
         try {
             while (tab.next()) {
-                tabellaDaVisualizzare.add(new Tabella(
-                                tab.getString("luogo"),
-                                tab.getInt("immortalazioni")
-                        )
-                );
-
-
+                String luogo = tab.getString("Nome");
+                int immortalazioni = tab.getInt("Immortalazioni");
+                tabellaDaVisualizzare.add(new Tabella(luogo, immortalazioni));
             }
-        } catch (SQLException ignore) {
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-
-        tabella.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("luogo"));
-        tabella.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("immortalazioni"));
-
-        tabella.getItems().addAll(tabellaDaVisualizzare);
-
+        return tabellaDaVisualizzare;
     }
+
+
 
 
     private @FXML void chiudiScheda() {

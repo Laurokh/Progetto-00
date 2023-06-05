@@ -54,7 +54,12 @@ public class GalleriaDaoimpl implements GalleriaDao {
 
 
     public ResultSet luoghiPiuImmoratlati() {
-        String query= "SELECT * FROM Q3()";
+        String query= "SELECT L.Nome, COUNT(F.IDFoto) as Immortalazioni\n" +
+                "                 FROM Luogo AS L\n" +
+                "                 LEFT JOIN Foto AS F ON L.IDLuogo = F.IDLuogo\n" +
+                "                 GROUP BY L.Nome\n" +
+                "                 ORDER BY Immortalazioni DESC\n" +
+                "                 LIMIT 3;";
         try {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);
