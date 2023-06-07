@@ -109,11 +109,8 @@ public class GalleriaDaoimpl implements GalleriaDao {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);
             db.connessione.close();
-            if (rs.next()) {
                 return rs;
-            } else {
-                return null ;
-            }
+
 
         } catch (
                 SQLException e) {
