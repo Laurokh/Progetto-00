@@ -103,8 +103,8 @@ public class GalleriaDaoimpl implements GalleriaDao {
 
 
 
-    public ResultSet ordinaPerTema(String nomeTema) {
-        String query= "SELECT * FROM Q2('"+nomeTema+"')";
+    public ResultSet ordinaPerTema(String nomeTema,int id) {
+        String query= "SELECT * FROM Q2('"+nomeTema+"') as c where c.idUtente= '"+id+"'";
         try {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);

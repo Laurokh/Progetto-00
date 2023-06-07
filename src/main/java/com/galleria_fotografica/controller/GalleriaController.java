@@ -8,6 +8,7 @@ import implementazioneDao.GalleriaDaoimpl;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,6 +30,7 @@ public class GalleriaController {
     private @FXML MenuButton luoghi;
     private @FXML MenuButton Collezioni;
     private @FXML TableView<TabellaFoto> lista;
+    ArrayList<TabellaFoto> listaF = new ArrayList<>();
 
 
 
@@ -52,7 +54,9 @@ public class GalleriaController {
         ResultSet listaLuoghiDao = galleriaDao.listaLuoghi();
         ResultSet listaFotoDao = galleriaDao.listaFoto(utente.getId());
         ResultSet listaCollezioniDao = galleriaDao.listaCollezioni(utente.getId());
-        ArrayList<TabellaFoto> listaF = new ArrayList<>();
+
+        ArrayList<TabellaFoto> ordinaPerTema= new ArrayList<>();
+        ArrayList<TabellaFoto> ordinaPerLuogo = new ArrayList<>();
 
 
         try {
@@ -90,9 +94,21 @@ public class GalleriaController {
                 MenuItem tema = new MenuItem(nomeTema);
 
                 tema.setOnAction(actionEvent -> {
+                ResultSet oTema= galleriaDao.ordinaPerTema(nomeTema,utente.getId());
+                
+                try {
+                    while (oTema.next()) {
+
+                        ordinaPerTema.add(new TabellaFoto(oTema.getString("nome")));
 
 
-
+                    }
+                } catch (SQLException e){
+                    throw  new RuntimeException(e);
+                }
+                    lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
+                    lista.getItems().setAll(ordinaPerTema);
+                    ordinaPerTema.clear();
                 });
 
                 temi.getItems().add(tema);
@@ -224,5 +240,10 @@ public class GalleriaController {
         newStage.show();
 
 
+    }
+
+    public void TuttiiTemi() {
+        lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
+        lista.getItems().setAll(listaF);
     }
 }
