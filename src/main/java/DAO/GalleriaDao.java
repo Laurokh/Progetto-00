@@ -9,7 +9,7 @@ public interface GalleriaDao {
 
     ResultSet luoghiPiuImmoratlati();
 
-    ResultSet ordinaPerLuogo(String nomeLuogo);
+    ResultSet ordinaPerLuogo(String nomeLuogo, int id);
 
     ResultSet ordinaPerTema (String nomeTema, int id);
 

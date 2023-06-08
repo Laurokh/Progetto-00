@@ -71,8 +71,8 @@ public class GalleriaDaoimpl implements GalleriaDao {
         }
     }
 
-    public ResultSet ordinaPerLuogo(String nomeLuogo) {
-        String query= "SELECT * FROM Q1('"+nomeLuogo+"')";
+    public ResultSet ordinaPerLuogo(String nomeLuogo,int id ) {
+        String query= "SELECT * FROM Q1('"+nomeLuogo+"') as l where l.idutente = '"+id+"'";
         try {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);

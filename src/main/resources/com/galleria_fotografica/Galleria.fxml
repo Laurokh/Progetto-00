@@ -53,11 +53,12 @@
                         <MenuButton fx:id="luoghi" graphicTextGap="6.0" layoutX="131.0" layoutY="4.0" mnemonicParsing="false" text="Luoghi">
                           <items>
                             <MenuItem fx:id="LuoghiPiuImmortalati" mnemonicParsing="false" onAction="#Luoghipiuimmortalati" text="Luoghi PIù immortalati" />
+                              <MenuItem fx:id="AnnullaOrdine" mnemonicParsing="false" onAction="#Ripristina" text="Annulla" />
                           </items>
                         </MenuButton>
                         <MenuButton fx:id="temi" layoutX="870.0" layoutY="4.0" mnemonicParsing="false" text="Temi">
                            <items>
-                              <MenuItem fx:id="temiDefault" mnemonicParsing="false" text="Tutte le foto " onAction="#TuttiiTemi" />
+                              <MenuItem fx:id="temiDefault" mnemonicParsing="false" onAction="#Ripristina" text="Annulla" />
                            </items></MenuButton>
                      </children>
                   </AnchorPane>

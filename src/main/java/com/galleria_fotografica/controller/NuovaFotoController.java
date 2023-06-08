@@ -10,7 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,6 +25,7 @@ public class NuovaFotoController {
     private @FXML MenuButton luogolbl;
     private @FXML TextField latLbl;
     private @FXML TextField longLbl;
+    private @FXML AnchorPane Testo;
     private Foto foto = new Foto();
 
     private  @FXML TextField nome;
@@ -41,7 +44,7 @@ public class NuovaFotoController {
                 String nomeLuogo = rs2.getString("nome");
                 double lat = rs2.getDouble("latitudine");
                 double lng = rs2.getDouble("longitudine");
-                int id = rs2.getInt("idlougo");
+                int id = rs2.getInt("idluogo");
 
                 MenuItem menuItem = new MenuItem(nomeLuogo);
                 menuItem.setOnAction(actionEvent -> {
@@ -125,7 +128,7 @@ public class NuovaFotoController {
         if(url == null) return;
 
         imageView.setImage(new Image(url));
-
+        Testo.setVisible(false);
     }
 
 
