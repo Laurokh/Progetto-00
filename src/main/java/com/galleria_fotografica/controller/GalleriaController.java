@@ -51,6 +51,7 @@ public class GalleriaController {
 
         ArrayList<TabellaFoto> ordinaPerTema= new ArrayList<>();
         ArrayList<TabellaFoto> ordinaPerLuogo = new ArrayList<>();
+        ArrayList<TabellaFoto> ordinaPerCollezione = new ArrayList<>();
 
 
         try {
@@ -168,9 +169,25 @@ public class GalleriaController {
 
 
                 String nomeCollezione = listaCollezioniDao.getString("nome");
+                int idCollezione=listaCollezioniDao.getInt("idCollezione");
                 MenuItem collezione = new MenuItem(nomeCollezione);
 
                 collezione.setOnAction(actionEvent -> {
+                    ResultSet oCollezione =   galleriaDao.ordinaPerCollezione(idCollezione);
+
+                    try {
+                        while (oCollezione.next()) {
+
+                            ordinaPerCollezione.add(new TabellaFoto(oCollezione.getString("nome")));
+
+
+                        }
+                    } catch (SQLException e){
+                        throw  new RuntimeException(e);
+                    }
+                    lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
+                    lista.getItems().setAll(ordinaPerCollezione);
+                    ordinaPerCollezione.clear();
 
                 });
               Collezioni.getItems().add(collezione);

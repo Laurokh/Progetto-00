@@ -101,7 +101,23 @@ public class GalleriaDaoimpl implements GalleriaDao {
         }
     }
 
+    public ResultSet ordinaPerCollezione (int idCollezione){
+        String query= "SELECT f.*\n" +
+                "FROM Foto f\n" +
+                "INNER JOIN compone a ON f.idfoto = a.idfoto\n" +
+                "WHERE a.idCollezione = '"+idCollezione+"'";
+        try {
+            Connessione db = Connessione.getInstanza();
+            ResultSet rs = db.connessione.createStatement().executeQuery(query);
+            db.connessione.close();
+            return rs;
 
+
+        } catch (
+                SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public ResultSet ordinaPerTema(String nomeTema,int id) {
         String query= "SELECT * FROM Q2('"+nomeTema+"') as c where c.idUtente= '"+id+"'";

@@ -17,5 +17,6 @@ public interface GalleriaDao {
 
     ResultSet listaFoto(int uId);
 
+    ResultSet ordinaPerCollezione (int idCollezione);
 
 }
