@@ -2,6 +2,7 @@ module com.galleria_fotografica {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires org.postgresql.jdbc;
 
     opens com.galleria_fotografica to javafx.fxml;
     exports com.galleria_fotografica;

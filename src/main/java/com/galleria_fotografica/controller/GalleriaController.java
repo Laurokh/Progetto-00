@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.postgresql.jdbc.PgResultSet;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -229,7 +230,7 @@ public class GalleriaController {
                     ordinaPerCollezione.clear();
 
                 });
-                Collezioni.getItems().add(collezione);
+                Collezioni.getItems().setAll(collezione);
             }
 
         } catch (SQLException e) {
@@ -335,12 +336,26 @@ public class GalleriaController {
 
         int selectedIndex = lista.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            lista.getItems().remove(selectedIndex);
-            Foto daEliminare = listaFoto.get(selectedIndex);
-            galleriaDao.eliminaFoto(String.valueOf(daEliminare.getId()));
-            listaF.remove(selectedIndex);
-            listaFoto.remove(selectedIndex);
 
+            Foto daEliminare = listaFoto.get(selectedIndex);
+            listaFoto.remove(daEliminare);
+            galleriaDao.eliminaFoto(String.valueOf(daEliminare.getId()));
+
+            listaF.clear();
+            ResultSet listaDao = galleriaDao.listaFoto(utente.getId());
+
+            try {
+                while (listaDao.next()) {
+
+                    listaF.add(new TabellaFoto(listaDao.getString("nome")));
+
+                }}catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                lista.getItems().clear();
+                lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
+
+                lista.getItems().addAll(listaF);
 
 
 
