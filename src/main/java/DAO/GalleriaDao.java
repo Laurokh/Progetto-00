@@ -19,4 +19,7 @@ public interface GalleriaDao {
 
     ResultSet ordinaPerCollezione (int idCollezione);
 
+
+    ResultSet eliminaFoto(String id);
+
 }

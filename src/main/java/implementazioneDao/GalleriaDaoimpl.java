@@ -5,6 +5,7 @@ import com.galleria_fotografica.connections.Connessione;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class GalleriaDaoimpl implements GalleriaDao {
 
@@ -133,4 +134,26 @@ public class GalleriaDaoimpl implements GalleriaDao {
             throw new RuntimeException(e);
         }
     }
+
+    public ResultSet eliminaFoto (String id){
+        String query= "DELETE FROM FOTO where idfoto='"+id+"'";
+        try {
+            Connessione db = Connessione.getInstanza();
+            Statement rss = db.connessione.createStatement();
+            rss.executeUpdate(query);
+            ResultSet rs= rss.getResultSet();
+            db.connessione.close();
+            return rs ;
+
+
+        } catch (
+                SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+
+
 }

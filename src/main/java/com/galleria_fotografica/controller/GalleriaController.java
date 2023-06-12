@@ -1,8 +1,10 @@
 package com.galleria_fotografica.controller;
 
+import DAO.GalleriaDao;
 import com.galleria_fotografica.Main;
 import com.galleria_fotografica.model.*;
 import implementazioneDao.GalleriaDaoimpl;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -24,8 +26,8 @@ public class GalleriaController {
     private @FXML MenuButton luoghi;
     private @FXML MenuButton Collezioni;
     private @FXML TableView<TabellaFoto> lista;
+    GalleriaDaoimpl galleriaDao = new GalleriaDaoimpl();
     ArrayList<TabellaFoto> listaF = new ArrayList<>();
-
 
 
     private ArrayList<Foto> listaFoto = new ArrayList<>();
@@ -43,13 +45,13 @@ public class GalleriaController {
 
     private @FXML void initialize() {
         nomeUtenteLabel.setText(utente.getNickname());
-        GalleriaDaoimpl galleriaDao = new GalleriaDaoimpl();
+
         ResultSet listaTemiDao = galleriaDao.listaTemi();
         ResultSet listaLuoghiDao = galleriaDao.listaLuoghi();
         ResultSet listaFotoDao = galleriaDao.listaFoto(utente.getId());
         ResultSet listaCollezioniDao = galleriaDao.listaCollezioni(utente.getId());
 
-        ArrayList<TabellaFoto> ordinaPerTema= new ArrayList<>();
+        ArrayList<TabellaFoto> ordinaPerTema = new ArrayList<>();
         ArrayList<TabellaFoto> ordinaPerLuogo = new ArrayList<>();
         ArrayList<TabellaFoto> ordinaPerCollezione = new ArrayList<>();
 
@@ -67,7 +69,7 @@ public class GalleriaController {
                 String nomeLuogo = listaLuoghiDao.getString("nome");
                 MenuItem luogo = new MenuItem(nomeLuogo);
                 luogo.setOnAction(actionEvent -> {
-                 ResultSet oLuogo =   galleriaDao.ordinaPerLuogo(nomeLuogo,utente.getId());
+                    ResultSet oLuogo = galleriaDao.ordinaPerLuogo(nomeLuogo, utente.getId());
 
                     try {
                         while (oLuogo.next()) {
@@ -76,8 +78,8 @@ public class GalleriaController {
 
 
                         }
-                    } catch (SQLException e){
-                        throw  new RuntimeException(e);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
                     lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
                     lista.getItems().setAll(ordinaPerLuogo);
@@ -104,18 +106,18 @@ public class GalleriaController {
                 MenuItem tema = new MenuItem(nomeTema);
 
                 tema.setOnAction(actionEvent -> {
-                ResultSet oTema= galleriaDao.ordinaPerTema(nomeTema,utente.getId());
-                
-                try {
-                    while (oTema.next()) {
+                    ResultSet oTema = galleriaDao.ordinaPerTema(nomeTema, utente.getId());
 
-                        ordinaPerTema.add(new TabellaFoto(oTema.getString("nome")));
+                    try {
+                        while (oTema.next()) {
+
+                            ordinaPerTema.add(new TabellaFoto(oTema.getString("nome")));
 
 
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
-                } catch (SQLException e){
-                    throw  new RuntimeException(e);
-                }
                     lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
                     lista.getItems().setAll(ordinaPerTema);
                     ordinaPerTema.clear();
@@ -149,7 +151,7 @@ public class GalleriaController {
         try {
             while (listaDao.next()) {
 
-                listaF.add(new TabellaFoto( listaDao.getString("nome")));
+                listaF.add(new TabellaFoto(listaDao.getString("nome")));
 
             }
 
@@ -165,15 +167,15 @@ public class GalleriaController {
                         listaCollezioniDao.getString("nome"),
                         listaCollezioniDao.getInt("idCollezione"),
                         listaCollezioniDao.getDate("data_creazione").toLocalDate()
-                        ));
+                ));
 
 
                 String nomeCollezione = listaCollezioniDao.getString("nome");
-                int idCollezione=listaCollezioniDao.getInt("idCollezione");
+                int idCollezione = listaCollezioniDao.getInt("idCollezione");
                 MenuItem collezione = new MenuItem(nomeCollezione);
 
                 collezione.setOnAction(actionEvent -> {
-                    ResultSet oCollezione =   galleriaDao.ordinaPerCollezione(idCollezione);
+                    ResultSet oCollezione = galleriaDao.ordinaPerCollezione(idCollezione);
 
                     try {
                         while (oCollezione.next()) {
@@ -182,18 +184,18 @@ public class GalleriaController {
 
 
                         }
-                    } catch (SQLException e){
-                        throw  new RuntimeException(e);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
                     lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
                     lista.getItems().setAll(ordinaPerCollezione);
                     ordinaPerCollezione.clear();
 
                 });
-              Collezioni.getItems().add(collezione);
+                Collezioni.getItems().add(collezione);
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
 
         }
@@ -220,7 +222,6 @@ public class GalleriaController {
         newStage.setUserData(utente);
         newStage.showAndWait();
         listaFoto.add((Foto) newStage.getUserData()); //vedi qua , magari con un try catch
-
 
 
     }
@@ -273,4 +274,22 @@ public class GalleriaController {
         lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
         lista.getItems().setAll(listaF);
     }
+
+
+    public void EliminaFoto() {
+
+
+        int selectedIndex = lista.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            lista.getItems().remove(selectedIndex);
+            Foto daEliminare = listaFoto.get(selectedIndex);
+            galleriaDao.eliminaFoto(String.valueOf(daEliminare.getId()));
+            listaF.remove(String.valueOf(daEliminare.getId()));
+
+
+        }
+    }
+
 }
+
+
