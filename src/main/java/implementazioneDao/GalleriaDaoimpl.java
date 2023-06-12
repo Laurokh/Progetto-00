@@ -151,9 +151,48 @@ public class GalleriaDaoimpl implements GalleriaDao {
             throw new RuntimeException(e);
         }
 
+
+    }
+    public ResultSet isPrivate (String id) {
+        String query= "Update FOTO Set privata = 'true' where idFoto = '"+id+"'";
+        try {
+            Connessione db = Connessione.getInstanza();
+            Statement rss = db.connessione.createStatement();
+            rss.executeUpdate(query);
+            ResultSet rs= rss.getResultSet();
+            db.connessione.close();
+            return rs ;
+
+
+        } catch (
+                SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+        public ResultSet isPubblica (String id) {
+            String query= "Update FOTO Set privata = 'false' where idFoto = '"+id+"'";
+            try {
+                Connessione db = Connessione.getInstanza();
+                Statement rss = db.connessione.createStatement();
+                rss.executeUpdate(query);
+                ResultSet rs= rss.getResultSet();
+                db.connessione.close();
+                return rs ;
 
 
+            } catch (
+                    SQLException e) {
+                throw new RuntimeException(e);
+            }
 
+    }
 }
+
+
+
+
+
+
+
+

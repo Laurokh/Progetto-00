@@ -22,6 +22,7 @@ public class GalleriaController {
     private @FXML Label nomeUtenteLabel;
     private @FXML Button nuovaFoto;
     private @FXML Button nuovaCollezione;
+    private @FXML CheckBox privata;
     private @FXML MenuButton temi;
     private @FXML MenuButton luoghi;
     private @FXML MenuButton Collezioni;
@@ -39,9 +40,7 @@ public class GalleriaController {
 
     private final Utente utente;
 
-    public GalleriaController(Utente utente) {
-        this.utente = utente;
-    }
+    public GalleriaController(Utente utente) {this.utente = utente;}
 
     private @FXML void initialize() {
         nomeUtenteLabel.setText(utente.getNickname());
@@ -54,6 +53,10 @@ public class GalleriaController {
         ArrayList<TabellaFoto> ordinaPerTema = new ArrayList<>();
         ArrayList<TabellaFoto> ordinaPerLuogo = new ArrayList<>();
         ArrayList<TabellaFoto> ordinaPerCollezione = new ArrayList<>();
+
+
+
+
 
 
         try {
@@ -290,6 +293,35 @@ public class GalleriaController {
         }
     }
 
+    public void Privata(){
+        int sIndex = lista.getSelectionModel().getSelectedIndex();
+        if (privata.isSelected()){
+
+            if (sIndex >= 0) {
+
+                Foto daPrivata = listaFoto.get(sIndex);
+                galleriaDao.isPrivate(String.valueOf(daPrivata.getId()));
+                daPrivata.setPrivata(true);
+
+
+            } else {
+
+                if (sIndex >= 0) {
+
+                    Foto daPrivata = listaFoto.get(sIndex);
+                    galleriaDao.isPubblica(String.valueOf(daPrivata.getId()));
+                    daPrivata.setPrivata(false);
+
+
+                }
+            }
+        }
+
 }
+
+
+
+
+    }
 
 

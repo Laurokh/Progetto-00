@@ -19,6 +19,9 @@ public interface GalleriaDao {
 
     ResultSet ordinaPerCollezione (int idCollezione);
 
+    ResultSet isPubblica (String id);
+    ResultSet isPrivate (String id);
+
 
     ResultSet eliminaFoto(String id);
 

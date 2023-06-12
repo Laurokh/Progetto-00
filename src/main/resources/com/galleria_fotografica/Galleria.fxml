@@ -37,7 +37,7 @@
                                  <items>
                                     <MenuItem fx:id="AnnullaC" mnemonicParsing="false" text="Annulla" onAction="#Ripristina" />
                                  </items></MenuButton>
-                              <CheckBox fx:id="privata" layoutX="128.0" layoutY="616.0" mnemonicParsing="false" text="Privata" />
+                              <CheckBox fx:id="privata" layoutX="128.0" layoutY="616.0" mnemonicParsing="false" text="Privata" onAction="#Privata"/>
                               <Button fx:id="eliminaFoto" layoutX="23.0" layoutY="612.0" mnemonicParsing="false" text="Elimina" onAction="#EliminaFoto" />
                            </children>
                         </AnchorPane>
