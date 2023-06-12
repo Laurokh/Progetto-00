@@ -35,10 +35,11 @@
                                  </columns></TableView>
                               <MenuButton fx:id="Collezioni" layoutX="39.0" layoutY="14.0" mnemonicParsing="false" text="ListaCollezioni">
                                  <items>
-                                    <MenuItem fx:id="AnnullaC" mnemonicParsing="false" text="Annulla" onAction="#Ripristina" />
+                                    <MenuItem fx:id="AnnullaC" mnemonicParsing="false" onAction="#Ripristina" text="Annulla" />
                                  </items></MenuButton>
-                              <CheckBox fx:id="privata" layoutX="128.0" layoutY="616.0" mnemonicParsing="false" text="Privata" onAction="#Privata"/>
-                              <Button fx:id="eliminaFoto" layoutX="23.0" layoutY="612.0" mnemonicParsing="false" text="Elimina" onAction="#EliminaFoto" />
+                              <CheckBox fx:id="privata" layoutX="133.0" layoutY="616.0" mnemonicParsing="false" onAction="#Privata" text="Privata" />
+                              <Button fx:id="eliminaFoto" layoutX="23.0" layoutY="612.0" mnemonicParsing="false" onAction="#EliminaFoto" text="Elimina" />
+                              <MenuButton fx:id="Collezioni2" layoutX="33.0" layoutY="646.0" mnemonicParsing="false" text="Aggiungi a Collezione" />
                            </children>
                         </AnchorPane>
                     </items>

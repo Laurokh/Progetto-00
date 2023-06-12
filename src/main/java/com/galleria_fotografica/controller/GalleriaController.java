@@ -1,21 +1,24 @@
 package com.galleria_fotografica.controller;
 
-import DAO.GalleriaDao;
+
 import com.galleria_fotografica.Main;
 import com.galleria_fotografica.model.*;
 import implementazioneDao.GalleriaDaoimpl;
-import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class GalleriaController {
@@ -27,12 +30,14 @@ public class GalleriaController {
     private @FXML MenuButton luoghi;
     private @FXML MenuButton Collezioni;
     private @FXML TableView<TabellaFoto> lista;
+    private @FXML MenuButton Collezioni2;
     GalleriaDaoimpl galleriaDao = new GalleriaDaoimpl();
     ArrayList<TabellaFoto> listaF = new ArrayList<>();
 
 
     private ArrayList<Foto> listaFoto = new ArrayList<>();
 
+    private ArrayList<Compone> listaC= new ArrayList<>();
     private ArrayList<Collezione> listaCollezioni = new ArrayList<>();
     private ArrayList<Luogo> listaLuoghi = new ArrayList<>();
     private ArrayList<Tema> listaTemi = new ArrayList<>();
@@ -44,7 +49,7 @@ public class GalleriaController {
 
     private @FXML void initialize() {
         nomeUtenteLabel.setText(utente.getNickname());
-
+        ResultSet listaCompone= galleriaDao.listaCompone();
         ResultSet listaTemiDao = galleriaDao.listaTemi();
         ResultSet listaLuoghiDao = galleriaDao.listaLuoghi();
         ResultSet listaFotoDao = galleriaDao.listaFoto(utente.getId());
@@ -55,9 +60,21 @@ public class GalleriaController {
         ArrayList<TabellaFoto> ordinaPerCollezione = new ArrayList<>();
 
 
+        lista.setOnMouseClicked(this::isprivate);
 
 
+    try {
+        while(listaCompone.next()){
+            listaC.add(new Compone(listaCompone.getInt("idFoto"),
 
+                    listaCompone.getInt("idCollezione"),
+                    listaCompone.getDate("data_aggiunta"))
+
+            );
+        }
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
 
         try {
 
@@ -176,6 +193,23 @@ public class GalleriaController {
                 String nomeCollezione = listaCollezioniDao.getString("nome");
                 int idCollezione = listaCollezioniDao.getInt("idCollezione");
                 MenuItem collezione = new MenuItem(nomeCollezione);
+                MenuItem collezione2 = new MenuItem(nomeCollezione);
+
+                collezione2.setOnAction(actionEvent -> {
+                    int selectedIndex = lista.getSelectionModel().getSelectedIndex();
+                    Foto daAggiungere= listaFoto.get(selectedIndex);
+
+                    galleriaDao.aggiungiaCollezione(idCollezione,daAggiungere.getId());
+                    listaC.add(new Compone(
+                            daAggiungere.getId(),
+                            idCollezione,
+                            Date.valueOf(LocalDate.now())
+
+                    ));
+
+
+                });
+                Collezioni2.getItems().add(collezione2);
 
                 collezione.setOnAction(actionEvent -> {
                     ResultSet oCollezione = galleriaDao.ordinaPerCollezione(idCollezione);
@@ -202,6 +236,23 @@ public class GalleriaController {
             throw new RuntimeException(e);
 
         }
+
+
+
+
+    }
+
+    private void isprivate(MouseEvent mouseEvent) {
+
+        int sIndex = lista.getSelectionModel().getSelectedIndex();
+        Foto isPrivata = listaFoto.get(sIndex);
+        if (isPrivata.isPrivata() == true) {
+
+            if (sIndex >= 0) {
+                privata.setSelected(true);
+
+            }
+        } else {privata.setSelected(false);}
     }
 
 
@@ -287,7 +338,10 @@ public class GalleriaController {
             lista.getItems().remove(selectedIndex);
             Foto daEliminare = listaFoto.get(selectedIndex);
             galleriaDao.eliminaFoto(String.valueOf(daEliminare.getId()));
-            listaF.remove(String.valueOf(daEliminare.getId()));
+            listaF.remove(selectedIndex);
+            listaFoto.remove(selectedIndex);
+
+
 
 
         }
@@ -295,7 +349,7 @@ public class GalleriaController {
 
     public void Privata(){
         int sIndex = lista.getSelectionModel().getSelectedIndex();
-        if (privata.isSelected()){
+        if (privata.isSelected() == true){
 
             if (sIndex >= 0) {
 
@@ -304,16 +358,17 @@ public class GalleriaController {
                 daPrivata.setPrivata(true);
 
 
-            } else {
+            }
+        }else if (privata.isSelected() == false) {
 
-                if (sIndex >= 0) {
+            if (sIndex >= 0) {
 
-                    Foto daPrivata = listaFoto.get(sIndex);
-                    galleriaDao.isPubblica(String.valueOf(daPrivata.getId()));
-                    daPrivata.setPrivata(false);
+                Foto daPrivata = listaFoto.get(sIndex);
+                galleriaDao.isPubblica(String.valueOf(daPrivata.getId()));
+                daPrivata.setPrivata(false);
 
 
-                }
+
             }
         }
 

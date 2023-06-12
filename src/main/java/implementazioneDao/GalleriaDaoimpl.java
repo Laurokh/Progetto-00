@@ -6,6 +6,7 @@ import com.galleria_fotografica.connections.Connessione;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 
 public class GalleriaDaoimpl implements GalleriaDao {
 
@@ -187,6 +188,42 @@ public class GalleriaDaoimpl implements GalleriaDao {
             }
 
     }
+
+    public ResultSet aggiungiaCollezione (int idCollezione, int idFoto){
+        String query= "INSERT INTO Compone VALUES('"+idFoto+"','"+idCollezione+"','"+LocalDate.now()+"');";
+        try {
+            Connessione db = Connessione.getInstanza();
+            Statement rss = db.connessione.createStatement();
+            rss.executeUpdate(query);
+            ResultSet rs= rss.getResultSet();
+            db.connessione.close();
+            return rs ;
+
+
+        } catch (
+                SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    public ResultSet listaCompone(){
+        String query= "SELECT * FROM Compone";
+        try {
+            Connessione db = Connessione.getInstanza();
+            ResultSet rs = db.connessione.createStatement().executeQuery(query);
+            db.connessione.close();
+            return rs;
+
+
+        } catch (
+                SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 }
 
 

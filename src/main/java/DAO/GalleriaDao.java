@@ -22,6 +22,9 @@ public interface GalleriaDao {
     ResultSet isPubblica (String id);
     ResultSet isPrivate (String id);
 
+    ResultSet listaCompone();
+
+    ResultSet aggiungiaCollezione (int idCollezione, int idFoto);
 
     ResultSet eliminaFoto(String id);
 

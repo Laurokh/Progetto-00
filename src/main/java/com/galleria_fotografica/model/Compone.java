@@ -4,12 +4,14 @@ import java.util.Date;
 
 public class Compone {
     private Date data_creazione;
-    private Foto foto;
-    private Collezione collezione;
+    private int foto;
+    private int collezione;
 
-    public Compone(Date data_creazione, Foto foto, Collezione collezione) {
+    public Compone(int foto, int collezione, java.sql.Date data_creazione) {
         this.data_creazione = data_creazione;
         this.foto = foto;
-        this.collezione = collezione;
+        this.collezione= collezione;
     }
+
+
 }
