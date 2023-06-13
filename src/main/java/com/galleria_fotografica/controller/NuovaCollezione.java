@@ -68,21 +68,10 @@ public class NuovaCollezione {
         Stage stage = (Stage) listaUtenti.getScene().getWindow();
 
         nuovaCollezione.nuovaCollezione(nomeCollezione.getText(), date);
-        ResultSet nCollezione= nuovaCollezione.maxCollezione();
-        int idNuovaCollezione = 0;
-
-        try {
-        while(nCollezione.next()){
-
-            idNuovaCollezione = nCollezione.getInt("idCollezione");
-        }
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
 
         for (int idUtente : idUtenti) {
-            nuovaCollezione.newPartecipazione(idUtente, idNuovaCollezione);
+            nuovaCollezione.newPartecipazione(idUtente);
         }
 
         stage.close();

@@ -7,6 +7,8 @@ public interface NuovaCollezioneDAO {
     ResultSet listautenti ();
     ResultSet nuovaCollezione(String nome, LocalDate data);
 
-    ResultSet maxCollezione();
+
+
+    ResultSet newPartecipazione (int idutente);
 
 }

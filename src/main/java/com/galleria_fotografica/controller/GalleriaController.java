@@ -168,6 +168,7 @@ public class GalleriaController {
             throw new RuntimeException(e);
 
         }
+
         ResultSet listaDao = galleriaDao.listaFoto(utente.getId());
 
         try {
@@ -183,6 +184,8 @@ public class GalleriaController {
         lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
         lista.getItems().addAll(listaF);
 
+
+
         try {
             while (listaCollezioniDao.next()) {
                 listaCollezioni.add(new Collezione(
@@ -191,10 +194,9 @@ public class GalleriaController {
                         listaCollezioniDao.getDate("data_creazione").toLocalDate()
                 ));
 
-
                 String nomeCollezione = listaCollezioniDao.getString("nome");
                 int idCollezione = listaCollezioniDao.getInt("idCollezione");
-                MenuItem collezione = new MenuItem(nomeCollezione);
+
                 MenuItem collezione2 = new MenuItem(nomeCollezione);
 
                 collezione2.setOnAction(actionEvent -> {
@@ -206,40 +208,33 @@ public class GalleriaController {
                             daAggiungere.getId(),
                             idCollezione,
                             Date.valueOf(LocalDate.now())
-
                     ));
-
-
                 });
+
                 Collezioni2.getItems().add(collezione2);
 
+                MenuItem collezione = new MenuItem(nomeCollezione);
                 collezione.setOnAction(actionEvent -> {
                     ResultSet oCollezione = galleriaDao.ordinaPerCollezione(idCollezione);
 
                     try {
                         while (oCollezione.next()) {
-
                             ordinaPerCollezione.add(new TabellaFoto(oCollezione.getString("nome")));
-
-
                         }
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
+
                     lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
                     lista.getItems().setAll(ordinaPerCollezione);
                     ordinaPerCollezione.clear();
-
                 });
-                Collezioni.getItems().setAll(collezione);
-            }
 
+                Collezioni.getItems().add(collezione);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-
         }
-
-
 
 
     }
@@ -302,64 +297,7 @@ public class GalleriaController {
         newStage.showAndWait();
         listaCollezioni.add((Collezione) newStage.getUserData());
 
-        listaC.clear();
 
-        ResultSet listaCollezioniDaon = galleriaDao.listaCollezioni(utente.getId());
-        try {
-            while (listaCollezioniDaon.next()) {
-                listaCollezioni.add(new Collezione(
-                        listaCollezioniDaon.getString("nome"),
-                        listaCollezioniDaon.getInt("idCollezione"),
-                        listaCollezioniDaon.getDate("data_creazione").toLocalDate()
-                ));
-
-
-                String nomeCollezione = listaCollezioniDaon.getString("nome");
-                int idCollezione = listaCollezioniDaon.getInt("idCollezione");
-                MenuItem collezione = new MenuItem(nomeCollezione);
-                MenuItem collezione2 = new MenuItem(nomeCollezione);
-
-                collezione2.setOnAction(actionEvent -> {
-                    int selectedIndex = lista.getSelectionModel().getSelectedIndex();
-                    Foto daAggiungere = listaFoto.get(selectedIndex);
-
-                    galleriaDao.aggiungiaCollezione(idCollezione, daAggiungere.getId());
-                    listaC.add(new Compone(
-                            daAggiungere.getId(),
-                            idCollezione,
-                            Date.valueOf(LocalDate.now())
-
-                    ));
-
-
-                });
-                Collezioni2.getItems().add(collezione2);
-
-                collezione.setOnAction(actionEvent -> {
-                    ResultSet oCollezione = galleriaDao.ordinaPerCollezione(idCollezione);
-
-                    try {
-                        while (oCollezione.next()) {
-
-                            ordinaPerCollezione.add(new TabellaFoto(oCollezione.getString("nome")));
-
-
-                        }
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
-                    lista.getItems().setAll(ordinaPerCollezione);
-                    ordinaPerCollezione.clear();
-
-                });
-                Collezioni.getItems().setAll(collezione);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-
-        }
     }
 
 
