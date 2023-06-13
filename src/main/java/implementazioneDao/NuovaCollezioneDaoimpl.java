@@ -5,6 +5,7 @@ import com.galleria_fotografica.connections.Connessione;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 
 public class NuovaCollezioneDaoimpl implements NuovaCollezioneDAO {
@@ -16,11 +17,10 @@ public class NuovaCollezioneDaoimpl implements NuovaCollezioneDAO {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);
             db.connessione.close();
-            if (rs.next()) {
+
+
                 return rs;
-            } else {
-                return null ;
-            }
+
         } catch (
                 SQLException e) {
             throw new RuntimeException(e);
@@ -28,14 +28,19 @@ public class NuovaCollezioneDaoimpl implements NuovaCollezioneDAO {
     }
 
 
-    public void newPartecipazione (int idutente, int idCollezione){
+    public ResultSet newPartecipazione (int idutente, int idCollezione){
         String query = "INSERT INTO partecipa_a VALUES ('" + idutente + "','" + idCollezione + "' )";
 
-        ResultSet rs;
+
         try {
             Connessione db = Connessione.getInstanza();
-            rs = db.connessione.createStatement().executeQuery(query);
+            Statement rss = db.connessione.createStatement();
+            rss.executeUpdate(query);
+            ResultSet rs= rss.getResultSet();
             db.connessione.close();
+            return rs ;
+
+
         } catch (
                 SQLException e) {
             throw new RuntimeException(e);
@@ -43,20 +48,47 @@ public class NuovaCollezioneDaoimpl implements NuovaCollezioneDAO {
 
     }
 
+    public ResultSet maxCollezione(){
+        String query = "SELECT idCollezione from collezione order by idcollezione desc limit 1";
 
 
-    public void nuovaCollezione(String nome, LocalDate data) {
-        String query = "INSERT INTO Collezione VALUES (DEFAULT,'" + nome + "','" + data + "' )";
-
-        ResultSet rs;
         try {
             Connessione db = Connessione.getInstanza();
-            rs = db.connessione.createStatement().executeQuery(query);
+            ResultSet rs = db.connessione.createStatement().executeQuery(query);
             db.connessione.close();
+
+
+            return rs;
+
         } catch (
                 SQLException e) {
             throw new RuntimeException(e);
         }
+
+
+
+    }
+
+
+
+    public ResultSet nuovaCollezione(String nome, LocalDate data) {
+        String query = "INSERT INTO Collezione VALUES (DEFAULT,'" + nome + "','" + data + "' )";
+
+
+        try {
+            Connessione db = Connessione.getInstanza();
+            Statement rss = db.connessione.createStatement();
+            rss.executeUpdate(query);
+            ResultSet rs= rss.getResultSet();
+            db.connessione.close();
+            return rs ;
+
+
+        } catch (
+                SQLException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 }

@@ -5,7 +5,8 @@ import java.time.LocalDate;
 
 public interface NuovaCollezioneDAO {
     ResultSet listautenti ();
-    void nuovaCollezione(String nome, LocalDate data);
+    ResultSet nuovaCollezione(String nome, LocalDate data);
 
+    ResultSet maxCollezione();
 
 }

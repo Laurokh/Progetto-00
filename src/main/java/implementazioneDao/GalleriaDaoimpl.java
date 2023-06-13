@@ -90,6 +90,7 @@ public class GalleriaDaoimpl implements GalleriaDao {
 
     public ResultSet listaCollezioni (int id){
         String query= "select * from collezione as c natural join partecipa_a where partecipa_a.idutente = '"+id+"'";
+
         try {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);

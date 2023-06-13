@@ -2,6 +2,7 @@ package com.galleria_fotografica.controller;
 
 
 import com.galleria_fotografica.model.Collezione;
+import com.galleria_fotografica.model.Utente;
 import implementazioneDao.NuovaCollezioneDaoimpl;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckMenuItem;
@@ -12,40 +13,53 @@ import javafx.stage.Stage;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NuovaCollezione {
 
     private @FXML TextField nomeCollezione;
     private @FXML MenuButton listaUtenti;
     private Collezione collezione = new Collezione();
-
+    List<Integer> idUtenti = new ArrayList<>();
+    List<String> nomeUtenti = new ArrayList<>();
 
     private @FXML void initialize() {
-        NuovaCollezioneDaoimpl dao = new NuovaCollezioneDaoimpl();
-        ResultSet listautenti = dao.listautenti();
-        try {
+            NuovaCollezioneDaoimpl dao = new NuovaCollezioneDaoimpl();
+            ResultSet lUtenti = dao.listautenti();
 
-            do {
-                String nomeUtente = listautenti.getString("username");
-                CheckMenuItem utente = new CheckMenuItem(nomeUtente);
-                utente.setOnAction(actionEvent -> {
-                    if (utente.isSelected()) {
-                        collezione.addutente(nomeUtente);
-                    } else {
-                        collezione.togliutente(nomeUtente);
+            try {
+                while (lUtenti.next()) {
+                    String nomeUtente = lUtenti.getString("username");
+                    int idUtente = lUtenti.getInt("idUtente");
 
+                    // Aggiungi nomeUtente e idUtente alle rispettive liste
+                    nomeUtenti.add(nomeUtente);
+                    idUtenti.add(idUtente);
 
-                    }
-                });
-                listaUtenti.getItems().add(utente);
-            }while (listautenti.next());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+                    CheckMenuItem utente = new CheckMenuItem(nomeUtente);
+                    utente.setOnAction(actionEvent -> {
+                        if (utente.isSelected()) {
+                            collezione.addutente(nomeUtente);
+                        } else {
+                            collezione.togliutente(nomeUtente);
+                        }
+                    });
+
+                    listaUtenti.getItems().add(utente);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
-        //  Label utente = new Label(nomeUtente);
-        // selezioneUtenti.getSelectionModel().selectionModeProperty().addListener((ObservableValue<? extends String>, utente.setText(nomeUtente);));
-//vfd
-    }
+
+
+
+
+
+
+
+
 
 
     private @FXML void conferma() {
@@ -53,8 +67,23 @@ public class NuovaCollezione {
         NuovaCollezioneDaoimpl nuovaCollezione = new NuovaCollezioneDaoimpl();
         Stage stage = (Stage) listaUtenti.getScene().getWindow();
 
-        nuovaCollezione.nuovaCollezione(nomeCollezione.getText(),date);
+        nuovaCollezione.nuovaCollezione(nomeCollezione.getText(), date);
+        ResultSet nCollezione= nuovaCollezione.maxCollezione();
+        int idNuovaCollezione = 0;
 
+        try {
+        while(nCollezione.next()){
+
+            idNuovaCollezione = nCollezione.getInt("idCollezione");
+        }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        for (int idUtente : idUtenti) {
+            nuovaCollezione.newPartecipazione(idUtente, idNuovaCollezione);
+        }
 
         stage.close();
     }

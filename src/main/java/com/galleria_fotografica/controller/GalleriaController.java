@@ -42,6 +42,9 @@ public class GalleriaController {
     private ArrayList<Collezione> listaCollezioni = new ArrayList<>();
     private ArrayList<Luogo> listaLuoghi = new ArrayList<>();
     private ArrayList<Tema> listaTemi = new ArrayList<>();
+    ArrayList<TabellaFoto> ordinaPerTema = new ArrayList<>();
+    ArrayList<TabellaFoto> ordinaPerLuogo = new ArrayList<>();
+    ArrayList<TabellaFoto> ordinaPerCollezione = new ArrayList<>();
 
 
     private final Utente utente;
@@ -56,9 +59,7 @@ public class GalleriaController {
         ResultSet listaFotoDao = galleriaDao.listaFoto(utente.getId());
         ResultSet listaCollezioniDao = galleriaDao.listaCollezioni(utente.getId());
 
-        ArrayList<TabellaFoto> ordinaPerTema = new ArrayList<>();
-        ArrayList<TabellaFoto> ordinaPerLuogo = new ArrayList<>();
-        ArrayList<TabellaFoto> ordinaPerCollezione = new ArrayList<>();
+
 
 
         lista.setOnMouseClicked(this::isprivate);
@@ -301,7 +302,67 @@ public class GalleriaController {
         newStage.showAndWait();
         listaCollezioni.add((Collezione) newStage.getUserData());
 
+        listaC.clear();
+
+        ResultSet listaCollezioniDaon = galleriaDao.listaCollezioni(utente.getId());
+        try {
+            while (listaCollezioniDaon.next()) {
+                listaCollezioni.add(new Collezione(
+                        listaCollezioniDaon.getString("nome"),
+                        listaCollezioniDaon.getInt("idCollezione"),
+                        listaCollezioniDaon.getDate("data_creazione").toLocalDate()
+                ));
+
+
+                String nomeCollezione = listaCollezioniDaon.getString("nome");
+                int idCollezione = listaCollezioniDaon.getInt("idCollezione");
+                MenuItem collezione = new MenuItem(nomeCollezione);
+                MenuItem collezione2 = new MenuItem(nomeCollezione);
+
+                collezione2.setOnAction(actionEvent -> {
+                    int selectedIndex = lista.getSelectionModel().getSelectedIndex();
+                    Foto daAggiungere = listaFoto.get(selectedIndex);
+
+                    galleriaDao.aggiungiaCollezione(idCollezione, daAggiungere.getId());
+                    listaC.add(new Compone(
+                            daAggiungere.getId(),
+                            idCollezione,
+                            Date.valueOf(LocalDate.now())
+
+                    ));
+
+
+                });
+                Collezioni2.getItems().add(collezione2);
+
+                collezione.setOnAction(actionEvent -> {
+                    ResultSet oCollezione = galleriaDao.ordinaPerCollezione(idCollezione);
+
+                    try {
+                        while (oCollezione.next()) {
+
+                            ordinaPerCollezione.add(new TabellaFoto(oCollezione.getString("nome")));
+
+
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
+                    lista.getItems().setAll(ordinaPerCollezione);
+                    ordinaPerCollezione.clear();
+
+                });
+                Collezioni.getItems().setAll(collezione);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        }
     }
+
+
 
     private @FXML void Luoghipiuimmortalati() {
 
