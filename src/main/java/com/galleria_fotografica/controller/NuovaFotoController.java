@@ -111,7 +111,10 @@ public class NuovaFotoController {
         Stage stage = (Stage) dispositivoMenuButton.getScene().getWindow();
         foto.setDataScatto(dataScatto.getValue());
         utente= (Utente)stage.getUserData();
-        fotoDao.nuovafoto(String.valueOf(nome.getScene().getWindow()),foto.isPrivata(), utente.getId(), foto.getDispositivo(),foto.getData_scatto(),foto.getLuogo());
+        fotoDao.nuovafoto(nome.getText(),foto.isPrivata(), utente.getId(), foto.getDispositivo(),foto.getData_scatto(),foto.getLuogo());
+
+
+
 
         stage.close();
         stage.setUserData(foto);

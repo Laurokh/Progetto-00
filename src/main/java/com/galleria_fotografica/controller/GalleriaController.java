@@ -254,7 +254,6 @@ public class GalleriaController {
 
 
     private @FXML void nuovaFoto() {
-
         Stage newStage = new Stage();
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Nuova foto.fxml"));
@@ -266,14 +265,32 @@ public class GalleriaController {
         }
         newStage.setScene(scene);
 
-
         newStage.setTitle("Nuova foto");
         newStage.setResizable(false);
         newStage.initModality(Modality.APPLICATION_MODAL);
         newStage.setUserData(utente);
         newStage.showAndWait();
-        listaFoto.add((Foto) newStage.getUserData()); //vedi qua , magari con un try catch
 
+
+        Object userData = newStage.getUserData();
+        if (userData instanceof Foto) {
+            Foto foto = (Foto) userData;
+            listaFoto.add(foto);
+        }
+            listaF.clear();
+            ResultSet listaDao = galleriaDao.listaFoto(utente.getId());
+
+            try {
+                while (listaDao.next()) {
+                    listaF.add(new TabellaFoto(listaDao.getString("nome")));
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            lista.getItems().clear();
+            lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
+            lista.getItems().addAll(listaF);
 
     }
 
@@ -296,6 +313,58 @@ public class GalleriaController {
         newStage.initModality(Modality.APPLICATION_MODAL);
         newStage.showAndWait();
         listaCollezioni.add((Collezione) newStage.getUserData());
+            ResultSet listaCollezioniDao= galleriaDao.listaCollezioni(utente.getId());
+            Collezioni.getItems().remove(1, Collezioni.getItems().size());
+          Collezioni2.getItems().clear();
+        try {
+            while (listaCollezioniDao.next()) {
+                listaCollezioni.add(new Collezione(
+                        listaCollezioniDao.getString("nome"),
+                        listaCollezioniDao.getInt("idCollezione"),
+                        listaCollezioniDao.getDate("data_creazione").toLocalDate()
+                ));
+
+                String nomeCollezione = listaCollezioniDao.getString("nome");
+                int idCollezione = listaCollezioniDao.getInt("idCollezione");
+
+                MenuItem collezione2 = new MenuItem(nomeCollezione);
+
+                collezione2.setOnAction(actionEvent -> {
+                    int selectedIndex = lista.getSelectionModel().getSelectedIndex();
+                    Foto daAggiungere= listaFoto.get(selectedIndex);
+
+                    galleriaDao.aggiungiaCollezione(idCollezione,daAggiungere.getId());
+                    listaC.add(new Compone(
+                            daAggiungere.getId(),
+                            idCollezione,
+                            Date.valueOf(LocalDate.now())
+                    ));
+                });
+
+                Collezioni2.getItems().add(collezione2);
+
+                MenuItem collezione = new MenuItem(nomeCollezione);
+                collezione.setOnAction(actionEvent -> {
+                    ResultSet oCollezione = galleriaDao.ordinaPerCollezione(idCollezione);
+
+                    try {
+                        while (oCollezione.next()) {
+                            ordinaPerCollezione.add(new TabellaFoto(oCollezione.getString("nome")));
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
+                    lista.getItems().setAll(ordinaPerCollezione);
+                    ordinaPerCollezione.clear();
+                });
+
+                Collezioni.getItems().add(collezione);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
