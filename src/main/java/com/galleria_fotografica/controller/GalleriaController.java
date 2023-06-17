@@ -6,6 +6,7 @@ import com.galleria_fotografica.model.*;
 import implementazioneDao.GalleriaDaoimpl;
 
 import javafx.animation.PauseTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -35,6 +36,8 @@ public class GalleriaController {
     private @FXML TableView<TabellaFoto> lista;
     private @FXML MenuButton Collezioni2;
     private @FXML Label error;
+    private @FXML Label nome;
+    private  @FXML MenuItem annullaC;
     GalleriaDaoimpl galleriaDao = new GalleriaDaoimpl();
     ArrayList<TabellaFoto> listaF = new ArrayList<>();
 
@@ -238,6 +241,8 @@ public class GalleriaController {
                 collezione.setOnAction(actionEvent -> {
                     ResultSet oCollezione = galleriaDao.ordinaPerCollezione(idCollezione);
 
+                    nome.setText(collezione.getText());
+
                     try {
                         while (oCollezione.next()) {
                             ordinaPerCollezione.add(new TabellaFoto(oCollezione.getString("nome")));
@@ -245,7 +250,7 @@ public class GalleriaController {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-
+                    Collezioni.setText(collezione.getText());
                     lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
                     lista.getItems().setAll(ordinaPerCollezione);
                     ordinaPerCollezione.clear();
@@ -402,6 +407,7 @@ public class GalleriaController {
     }
 
     public void Ripristina() {
+
         lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
         lista.getItems().setAll(listaF);
     }

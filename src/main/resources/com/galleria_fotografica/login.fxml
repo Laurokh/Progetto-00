@@ -24,8 +24,9 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button layoutX="13.0" layoutY="117.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="411.0" text="Conferma" />
+            <Button layoutX="165.0" layoutY="117.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="235.0" text="Conferma" />
             <Label fx:id="testo" alignment="CENTER" layoutX="101.0" layoutY="147.0" prefHeight="23.0" prefWidth="235.0" textAlignment="CENTER" />
+            <Button fx:id="Button" layoutX="36.0" layoutY="117.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="" />
          </children>
       </AnchorPane>
    </children>

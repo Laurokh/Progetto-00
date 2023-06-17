@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -22,7 +23,7 @@ import java.sql.SQLException;
 public class LoginController {
     private @FXML TextField campoNome;
     private @FXML PasswordField campoPsw;
-    private @FXML Label errore;
+
 
     private @FXML Label testo;
 
@@ -64,6 +65,25 @@ public class LoginController {
         }
         ;
     }
+
+    private @FXML void Registrazione (){
+        Stage newStage = new Stage();
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Registrazione.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        newStage.setScene(scene);
+
+        newStage.setTitle("Registrazione");
+        newStage.setResizable(false);
+        newStage.initModality(Modality.APPLICATION_MODAL);
+        newStage.showAndWait();
+    }
+
 
 
 }

@@ -33,14 +33,16 @@
                                  <columns>
                                     <TableColumn fx:id="foto" prefWidth="192.9056671002704" text="Foto" />
                                  </columns></TableView>
-                              <MenuButton fx:id="Collezioni" layoutX="39.0" layoutY="14.0" mnemonicParsing="false" text="ListaCollezioni">
+                              <MenuButton fx:id="Collezioni" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="ListaCollezioni">
                                  <items>
-                                    <MenuItem fx:id="AnnullaC" mnemonicParsing="false" onAction="#Ripristina" text="Annulla" />
+                                    <MenuItem fx:id="annullaC" mnemonicParsing="false" onAction="#Ripristina" text="Annulla" />
                                  </items></MenuButton>
                               <CheckBox fx:id="privata" layoutX="133.0" layoutY="616.0" mnemonicParsing="false" onAction="#Privata" text="Privata" />
                               <Button fx:id="eliminaFoto" layoutX="23.0" layoutY="612.0" mnemonicParsing="false" onAction="#EliminaFoto" text="Elimina" />
                               <MenuButton fx:id="Collezioni2" layoutX="33.0" layoutY="646.0" mnemonicParsing="false" text="Aggiungi a Collezione" />
                               <Label fx:id="error" layoutX="79.0" layoutY="689.0" prefHeight="17.0" prefWidth="55.0" />
+                              <Button fx:id="Elimina" layoutX="136.0" layoutY="14.0" mnemonicParsing="false" text="Elimina" />
+                              <Label fx:id="nome" layoutX="54.0" layoutY="46.0" prefHeight="17.0" prefWidth="108.0" />
                            </children>
                         </AnchorPane>
                     </items>
