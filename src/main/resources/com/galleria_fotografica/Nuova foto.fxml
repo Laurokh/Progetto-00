@@ -50,6 +50,7 @@
                   <Text layoutX="51.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci immagine" />
                </children>
             </AnchorPane>
+            <Label fx:id="errore" alignment="CENTER" layoutX="166.0" layoutY="407.0" prefHeight="17.0" prefWidth="68.0" />
          </children>
       </AnchorPane>
    </children>

@@ -4,6 +4,7 @@ package com.galleria_fotografica.controller;
 import com.galleria_fotografica.Main;
 import com.galleria_fotografica.model.Utente;
 import implementazioneDao.LoginDaoimpl;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -20,6 +22,7 @@ import java.sql.SQLException;
 public class LoginController {
     private @FXML TextField campoNome;
     private @FXML PasswordField campoPsw;
+    private @FXML Label errore;
 
     private @FXML Label testo;
 
@@ -51,7 +54,13 @@ public class LoginController {
             newStage.setResizable(false);
             newStage.show();
         } else {
+
             testo.setText("Nome utente o Password errata");
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(event -> {
+                testo.setText("");
+            });
+            pause.play();
         }
         ;
     }

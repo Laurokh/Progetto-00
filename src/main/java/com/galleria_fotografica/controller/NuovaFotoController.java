@@ -6,12 +6,14 @@ import com.galleria_fotografica.model.Utente;
 import implementazioneDao.LuogoDaoimpl;
 import implementazioneDao.NuovaFotoDaoimpl;
 import implementazioneDao.TemaDaoimpl;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 import java.sql.ResultSet;
@@ -26,6 +28,7 @@ public class NuovaFotoController {
     private @FXML TextField latLbl;
     private @FXML TextField longLbl;
     private @FXML AnchorPane Testo;
+    private @FXML Label errore;
     private Foto foto = new Foto();
 
     private  @FXML TextField nome;
@@ -35,51 +38,51 @@ public class NuovaFotoController {
 
     private @FXML void initialize() {
 
-        TemaDaoimpl temaDao = new TemaDaoimpl();
-        LuogoDaoimpl luogoDao = new LuogoDaoimpl();
-        ResultSet rs = temaDao.caricaTemi();
-        ResultSet rs2 = luogoDao.caricaLuogo();
-        try {
-            while (rs2.next()) {
-                String nomeLuogo = rs2.getString("nome");
-                double lat = rs2.getDouble("latitudine");
-                double lng = rs2.getDouble("longitudine");
-                int id = rs2.getInt("idluogo");
+    TemaDaoimpl temaDao = new TemaDaoimpl();
+    LuogoDaoimpl luogoDao = new LuogoDaoimpl();
+    ResultSet rs = temaDao.caricaTemi();
+    ResultSet rs2 = luogoDao.caricaLuogo();
+    try {
+        while (rs2.next()) {
+            String nomeLuogo = rs2.getString("nome");
+            double lat = rs2.getDouble("latitudine");
+            double lng = rs2.getDouble("longitudine");
+            int id = rs2.getInt("idluogo");
 
-                MenuItem menuItem = new MenuItem(nomeLuogo);
-                menuItem.setOnAction(actionEvent -> {
-                    luogolbl.setText(nomeLuogo);
+            MenuItem menuItem = new MenuItem(nomeLuogo);
+            menuItem.setOnAction(actionEvent -> {
+                luogolbl.setText(nomeLuogo);
 
-                    foto.setLuogo(new Luogo(nomeLuogo, lat, lng, id));
-                    latLbl.setText(String.valueOf(lat));
-                    longLbl.setText(String.valueOf(lng));
-                });
+                foto.setLuogo(new Luogo(nomeLuogo, lat, lng, id));
+                latLbl.setText(String.valueOf(lat));
+                longLbl.setText(String.valueOf(lng));
+            });
 
-                luogolbl.getItems().add(menuItem);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            luogolbl.getItems().add(menuItem);
         }
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
 
-        try {
-            while (rs.next()) {
-                String nomeTema = rs.getString("nome");
+    try {
+        while (rs.next()) {
+            String nomeTema = rs.getString("nome");
 
-                CheckMenuItem menuItem = new CheckMenuItem(nomeTema);
-                menuItem.setOnAction(actionEvent -> {
-                    if (menuItem.isSelected()) {
-                        foto.addtema(nomeTema);
-                    } else {
-                        foto.togliTema(nomeTema);
+            CheckMenuItem menuItem = new CheckMenuItem(nomeTema);
+            menuItem.setOnAction(actionEvent -> {
+                if (menuItem.isSelected()) {
+                    foto.addtema(nomeTema);
+                } else {
+                    foto.togliTema(nomeTema);
 
-                    }
-                });
-                temalbl.getItems().add(menuItem);
+                }
+            });
+            temalbl.getItems().add(menuItem);
 
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
 
     }
 
@@ -107,11 +110,24 @@ public class NuovaFotoController {
 
     private @FXML void conferma() {
 
+
+
         NuovaFotoDaoimpl fotoDao = new NuovaFotoDaoimpl();
         Stage stage = (Stage) dispositivoMenuButton.getScene().getWindow();
         foto.setDataScatto(dataScatto.getValue());
         utente= (Utente)stage.getUserData();
-        fotoDao.nuovafoto(nome.getText(),foto.isPrivata(), utente.getId(), foto.getDispositivo(),foto.getData_scatto(),foto.getLuogo());
+
+        try {
+            fotoDao.nuovafoto(nome.getText(), foto.isPrivata(), utente.getId(), foto.getDispositivo(), foto.getData_scatto(), foto.getLuogo());
+        }catch (Exception e){
+            errore.setText("Errore!!");
+
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(event -> {
+                errore.setText("");
+            });
+            pause.play();
+            return;}
 
 
 
@@ -136,6 +152,5 @@ public class NuovaFotoController {
 
 
 }
-//todo finisci l'aggiunta della foto, funzione di inserimento nel model e nel database
-//todo controllo per vlaori null , solo dispositivo deve essere compilato
+
 

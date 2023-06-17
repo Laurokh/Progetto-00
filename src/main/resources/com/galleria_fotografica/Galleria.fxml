@@ -40,6 +40,7 @@
                               <CheckBox fx:id="privata" layoutX="133.0" layoutY="616.0" mnemonicParsing="false" onAction="#Privata" text="Privata" />
                               <Button fx:id="eliminaFoto" layoutX="23.0" layoutY="612.0" mnemonicParsing="false" onAction="#EliminaFoto" text="Elimina" />
                               <MenuButton fx:id="Collezioni2" layoutX="33.0" layoutY="646.0" mnemonicParsing="false" text="Aggiungi a Collezione" />
+                              <Label fx:id="error" layoutX="79.0" layoutY="689.0" prefHeight="17.0" prefWidth="55.0" />
                            </children>
                         </AnchorPane>
                     </items>

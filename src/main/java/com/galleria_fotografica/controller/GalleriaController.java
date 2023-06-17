@@ -5,6 +5,7 @@ import com.galleria_fotografica.Main;
 import com.galleria_fotografica.model.*;
 import implementazioneDao.GalleriaDaoimpl;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.postgresql.jdbc.PgResultSet;
 
 import java.io.IOException;
@@ -32,6 +34,7 @@ public class GalleriaController {
     private @FXML MenuButton Collezioni;
     private @FXML TableView<TabellaFoto> lista;
     private @FXML MenuButton Collezioni2;
+    private @FXML Label error;
     GalleriaDaoimpl galleriaDao = new GalleriaDaoimpl();
     ArrayList<TabellaFoto> listaF = new ArrayList<>();
 
@@ -202,8 +205,25 @@ public class GalleriaController {
                 collezione2.setOnAction(actionEvent -> {
                     int selectedIndex = lista.getSelectionModel().getSelectedIndex();
                     Foto daAggiungere= listaFoto.get(selectedIndex);
+                    try {
+                        galleriaDao.aggiungiaCollezione(idCollezione, daAggiungere.getId());
+                        error.setText("Fatto!!");
 
-                    galleriaDao.aggiungiaCollezione(idCollezione,daAggiungere.getId());
+                        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+                        pause.setOnFinished(event -> {
+                            error.setText("");
+                        });
+                        pause.play();
+                    }catch (Exception e){
+                        error.setText("Errore!!");
+
+                        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+                        pause.setOnFinished(event -> {
+                            error.setText("");
+                        });
+                        pause.play();
+
+                    }
                     listaC.add(new Compone(
                             daAggiungere.getId(),
                             idCollezione,

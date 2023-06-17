@@ -54,6 +54,7 @@ public class Foto {
         return data_scatto;
     }
 
+    public String getNome() {return nome;}
     public Luogo getLuogo() {
         return luogo;
     }
@@ -118,6 +119,7 @@ public class Foto {
     public void setrappresenta(Utente rappresenta) {
         this.rappresenta.add(rappresenta);
     }
+
 
 
 }
