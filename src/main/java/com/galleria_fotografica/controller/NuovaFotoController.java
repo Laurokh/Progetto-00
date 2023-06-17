@@ -130,10 +130,10 @@ public class NuovaFotoController {
             
             try{
             if(rs.next()) {fotoId = rs.getInt("idFoto");}}catch(SQLException e){}
-            System.out.println(fotoId);
+
                 for (int id : idTemi) {
                     fotoDao.newPossiede(fotoId,id);
-                    System.out.println("sec");
+
                 }
 
                 }catch (Exception e){
