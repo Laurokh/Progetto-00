@@ -78,8 +78,10 @@ public class NuovaFotoController {
             menuItem.setOnAction(actionEvent -> {
                 if (menuItem.isSelected()) {
                     foto.addtema(idTema);
+                    idTemi.add(idTema);
                 } else {
                     foto.togliTema(idTema);
+                    idTemi.add(idTema);
 
                 }
             });
@@ -123,7 +125,7 @@ public class NuovaFotoController {
         foto.setDataScatto(dataScatto.getValue());
         utente= (Utente)stage.getUserData();
 
-       // try {
+       try {
             ResultSet rs= fotoDao.nuovafoto(nome.getText(), foto.isPrivata(), utente.getId(), foto.getDispositivo(), foto.getData_scatto(), foto.getLuogo());
             
             try{
@@ -134,7 +136,7 @@ public class NuovaFotoController {
                     System.out.println("sec");
                 }
 
-                /*}catch (Exception e){
+                }catch (Exception e){
             errore.setText("Errore!!");
 
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
@@ -142,7 +144,7 @@ public class NuovaFotoController {
                 errore.setText("");
             });
             pause.play();
-            return;}*/
+            return;}
             
 
 
