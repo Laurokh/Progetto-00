@@ -14,6 +14,8 @@ public class Tema {
         this.foto.add(foto);
     }
 
+    public int getId(){return id;}
+
     public Tema(int id, String descrizione, String nome) {
         this.id = id;
         this.descrizione = descrizione;

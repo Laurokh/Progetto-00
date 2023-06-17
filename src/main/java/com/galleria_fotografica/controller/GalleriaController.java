@@ -207,7 +207,8 @@ public class GalleriaController {
                     Foto daAggiungere= listaFoto.get(selectedIndex);
                     try {
                         galleriaDao.aggiungiaCollezione(idCollezione, daAggiungere.getId());
-                        error.setText("Fatto!!");
+                        if(privata.isSelected()){privata.setSelected(false);}
+                       error.setText("Fatto!!");
 
                         PauseTransition pause = new PauseTransition(Duration.seconds(3));
                         pause.setOnFinished(event -> {
@@ -297,20 +298,7 @@ public class GalleriaController {
             Foto foto = (Foto) userData;
             listaFoto.add(foto);
         }
-            listaF.clear();
-            ResultSet listaDao = galleriaDao.listaFoto(utente.getId());
-
-            try {
-                while (listaDao.next()) {
-                    listaF.add(new TabellaFoto(listaDao.getString("nome")));
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
-            lista.getItems().clear();
-            lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
-            lista.getItems().addAll(listaF);
+        AggiornaLista ();
 
     }
 
@@ -450,6 +438,24 @@ public class GalleriaController {
         }
     }
 
+    public void AggiornaLista (){
+
+        listaF.clear();
+        ResultSet listaDao = galleriaDao.listaFoto(utente.getId());
+
+        try {
+            while (listaDao.next()) {
+                listaF.add(new TabellaFoto(listaDao.getString("nome")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        lista.getItems().clear();
+        lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
+        lista.getItems().addAll(listaF);
+
+    }
     public void Privata(){
         int sIndex = lista.getSelectionModel().getSelectedIndex();
         if (privata.isSelected() == true){

@@ -18,6 +18,8 @@ import javafx.util.Duration;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NuovaFotoController {
     private @FXML MenuButton dispositivoMenuButton;
@@ -30,8 +32,11 @@ public class NuovaFotoController {
     private @FXML AnchorPane Testo;
     private @FXML Label errore;
     private Foto foto = new Foto();
+    List<Integer> idTemi = new ArrayList<>();
+
 
     private  @FXML TextField nome;
+
     private @FXML ImageView imageView;
 
     private Utente utente;
@@ -67,13 +72,14 @@ public class NuovaFotoController {
     try {
         while (rs.next()) {
             String nomeTema = rs.getString("nome");
+            int idTema = rs.getInt("idTema");
 
             CheckMenuItem menuItem = new CheckMenuItem(nomeTema);
             menuItem.setOnAction(actionEvent -> {
                 if (menuItem.isSelected()) {
-                    foto.addtema(nomeTema);
+                    foto.addtema(idTema);
                 } else {
-                    foto.togliTema(nomeTema);
+                    foto.togliTema(idTema);
 
                 }
             });
@@ -111,15 +117,24 @@ public class NuovaFotoController {
     private @FXML void conferma() {
 
 
-
+        int fotoId = 0;
         NuovaFotoDaoimpl fotoDao = new NuovaFotoDaoimpl();
         Stage stage = (Stage) dispositivoMenuButton.getScene().getWindow();
         foto.setDataScatto(dataScatto.getValue());
         utente= (Utente)stage.getUserData();
 
-        try {
-            fotoDao.nuovafoto(nome.getText(), foto.isPrivata(), utente.getId(), foto.getDispositivo(), foto.getData_scatto(), foto.getLuogo());
-        }catch (Exception e){
+       // try {
+            ResultSet rs= fotoDao.nuovafoto(nome.getText(), foto.isPrivata(), utente.getId(), foto.getDispositivo(), foto.getData_scatto(), foto.getLuogo());
+            
+            try{
+            if(rs.next()) {fotoId = rs.getInt("idFoto");}}catch(SQLException e){}
+            System.out.println(fotoId);
+                for (int id : idTemi) {
+                    fotoDao.newPossiede(fotoId,id);
+                    System.out.println("sec");
+                }
+
+                /*}catch (Exception e){
             errore.setText("Errore!!");
 
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
@@ -127,7 +142,9 @@ public class NuovaFotoController {
                 errore.setText("");
             });
             pause.play();
-            return;}
+            return;}*/
+            
+
 
 
 

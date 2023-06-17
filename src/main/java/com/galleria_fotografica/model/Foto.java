@@ -5,6 +5,7 @@ import javafx.stage.FileChooser;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Foto {
     private int id;
@@ -19,7 +20,7 @@ public class Foto {
 
     private FileChooser File;
     private ArrayList<Compone> compone = new ArrayList<>();
-    private ArrayList<String> temi = new ArrayList<String>();
+    private List<Integer> temi = new ArrayList<>();
     private ArrayList<Utente> rappresenta = new ArrayList<>();
 
     public Foto() {
@@ -63,7 +64,7 @@ public class Foto {
         return scattata_da;
     }
 
-    public ArrayList<String> getTemi() {
+    public List<Integer> getTemi() {
         return temi;
     }
 
@@ -91,7 +92,6 @@ public class Foto {
         this.dispositivo = dispositivo;
         this.privata = privata;
         this.data_scatto = data_scatto;
-        //todo vedi this.File= null;
 
     }
 
@@ -100,11 +100,11 @@ public class Foto {
         this.scattata_da = scattata_da;
     }
 
-    public void addtema(String tema) {
+    public void addtema(int tema) {
         this.temi.add(tema);
     }
 
-    public void togliTema(String tema) {
+    public void togliTema(int tema) {
         this.temi.removeIf(item -> item.equals(tema));
     }
 
