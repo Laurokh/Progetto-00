@@ -28,4 +28,6 @@ public interface GalleriaDao {
 
     ResultSet eliminaFoto(String id);
 
+    ResultSet eliminaCollezione(String elimina);
+
 }

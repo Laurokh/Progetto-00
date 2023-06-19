@@ -225,6 +225,22 @@ public class GalleriaDaoimpl implements GalleriaDao {
 
     }
 
+    public ResultSet eliminaCollezione(String elimina) {
+        String query= "DELETE FROM Collezione where nome='"+elimina+"'";
+        try {
+            Connessione db = Connessione.getInstanza();
+            Statement rss = db.connessione.createStatement();
+            rss.executeUpdate(query);
+            ResultSet rs= rss.getResultSet();
+            db.connessione.close();
+            return rs ;
+
+
+        } catch (
+                SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 
 

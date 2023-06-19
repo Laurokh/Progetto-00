@@ -18,8 +18,11 @@ import java.util.List;
 
 public class NuovaCollezione {
 
+
+
     private @FXML TextField nomeCollezione;
     private @FXML MenuButton listaUtenti;
+
     private Collezione collezione = new Collezione();
     List<Integer> idUtenti = new ArrayList<>();
     List<String> nomeUtenti = new ArrayList<>();
