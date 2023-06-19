@@ -27,33 +27,43 @@ public class NuovaCollezione {
     List<Integer> idUtenti = new ArrayList<>();
     List<String> nomeUtenti = new ArrayList<>();
 
+    private final  Utente utente;
+    public NuovaCollezione(Utente utente){this.utente= utente;}
+
     private @FXML void initialize() {
-            NuovaCollezioneDaoimpl dao = new NuovaCollezioneDaoimpl();
-            ResultSet lUtenti = dao.listautenti();
 
-            try {
-                while (lUtenti.next()) {
-                    String nomeUtente = lUtenti.getString("username");
-                    int idUtente = lUtenti.getInt("idUtente");
 
-                    // Aggiungi nomeUtente e idUtente alle rispettive liste
-                    nomeUtenti.add(nomeUtente);
-                    idUtenti.add(idUtente);
+        NuovaCollezioneDaoimpl dao = new NuovaCollezioneDaoimpl();
+        ResultSet lUtenti = dao.listautenti();
+        String nomeUtenteLoggato = utente.getNickname();
+        try {
+            while (lUtenti.next()) {
+                String nomeUtente = lUtenti.getString("username");
+                int idUtente = lUtenti.getInt("idUtente");
 
-                    CheckMenuItem utente = new CheckMenuItem(nomeUtente);
-                    utente.setOnAction(actionEvent -> {
-                        if (utente.isSelected()) {
-                            collezione.addutente(nomeUtente);
-                        } else {
-                            collezione.togliutente(nomeUtente);
-                        }
-                    });
+                nomeUtenti.add(nomeUtente);
+                idUtenti.add(idUtente);
 
-                    listaUtenti.getItems().add(utente);
+                CheckMenuItem utente = new CheckMenuItem(nomeUtente);
+                if (nomeUtente.equals(nomeUtenteLoggato)) {
+                    utente.setSelected(true);
+                    utente.setDisable(true);  // Disabilita la selezione dell'utente loggato
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+
+                utente.setOnAction(actionEvent -> {
+                    if (utente.isSelected()) {
+                        collezione.addutente(nomeUtente);
+                    } else {
+                        collezione.togliutente(nomeUtente);
+                    }
+                });
+
+
+                listaUtenti.getItems().add(utente);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         }
 
 

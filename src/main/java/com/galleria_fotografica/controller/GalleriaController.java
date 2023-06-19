@@ -315,9 +315,11 @@ public class GalleriaController {
         Stage newStage = new Stage();
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Nuova collezione.fxml"));
-        Scene scene = null;
+        Scene scene ;
         try {
+            fxmlLoader.setControllerFactory(e -> new NuovaCollezione(utente));
             scene = new Scene(fxmlLoader.load());
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
