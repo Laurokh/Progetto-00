@@ -101,6 +101,8 @@ public class GalleriaController {
                 MenuItem luogo = new MenuItem(nomeLuogo);
                 luogo.setOnAction(actionEvent -> {
                     ResultSet oLuogo = galleriaDao.ordinaPerLuogo(nomeLuogo, utente.getId());
+                    Collezioni.setText("Lista Collezioni");
+                    nome.setText("");
 
                     try {
                         while (oLuogo.next()) {
@@ -138,7 +140,8 @@ public class GalleriaController {
 
                 tema.setOnAction(actionEvent -> {
                     ResultSet oTema = galleriaDao.ordinaPerTema(nomeTema, utente.getId());
-
+                    Collezioni.setText("Lista Collezioni");
+                    nome.setText("");
                     try {
                         while (oTema.next()) {
 
@@ -441,8 +444,11 @@ public class GalleriaController {
 
         lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
         lista.getItems().setAll(listaF);
-        Collezioni.setText("Lista Collezioni");
-        nome.setText("");
+
+
+            Collezioni.setText("Lista Collezioni");
+            nome.setText("");
+
     }
 
 
