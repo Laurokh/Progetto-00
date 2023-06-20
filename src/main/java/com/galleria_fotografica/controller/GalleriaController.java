@@ -38,8 +38,11 @@ public class GalleriaController {
     private @FXML Label error;
     private @FXML Label nome;
     private  @FXML MenuItem annullaC;
+
+
     GalleriaDaoimpl galleriaDao = new GalleriaDaoimpl();
     ArrayList<TabellaFoto> listaF = new ArrayList<>();
+
 
 
     private ArrayList<Foto> listaFoto = new ArrayList<>();
@@ -453,21 +456,7 @@ public class GalleriaController {
             listaFoto.remove(daEliminare);
             galleriaDao.eliminaFoto(String.valueOf(daEliminare.getId()));
 
-            listaF.clear();
-            ResultSet listaDao = galleriaDao.listaFoto(utente.getId());
-
-            try {
-                while (listaDao.next()) {
-
-                    listaF.add(new TabellaFoto(listaDao.getString("nome")));
-
-                }}catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                lista.getItems().clear();
-                lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
-
-                lista.getItems().addAll(listaF);
+            AggiornaLista();
 
 
 

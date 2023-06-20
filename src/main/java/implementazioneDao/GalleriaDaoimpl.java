@@ -16,8 +16,7 @@ public class GalleriaDaoimpl implements GalleriaDao {
             Connessione db = Connessione.getInstanza();
             ResultSet rs = db.connessione.createStatement().executeQuery(query);
             db.connessione.close();
-
-                return rs;
+            return rs;
 
 
         } catch (
