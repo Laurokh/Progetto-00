@@ -7,13 +7,6 @@ public class Tema {
     private String descrizione;
     private String nome;
 
-    private ArrayList<Foto> foto = new ArrayList<>();
-
-    public void addfoto(Foto foto) {
-
-        this.foto.add(foto);
-    }
-
     public int getId(){return id;}
 
     public Tema(int id, String descrizione, String nome) {

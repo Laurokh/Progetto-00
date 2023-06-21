@@ -6,7 +6,6 @@ import com.galleria_fotografica.model.*;
 import implementazioneDao.GalleriaDaoimpl;
 
 import javafx.animation.PauseTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.postgresql.jdbc.PgResultSet;
+
 
 import java.io.IOException;
 import java.sql.Date;
@@ -38,11 +37,8 @@ public class GalleriaController {
     private @FXML Label error;
     private @FXML Label nome;
     private  @FXML MenuItem annullaC;
-
-
     GalleriaDaoimpl galleriaDao = new GalleriaDaoimpl();
     ArrayList<TabellaFoto> listaF = new ArrayList<>();
-
 
 
     private ArrayList<Foto> listaFoto = new ArrayList<>();
@@ -101,22 +97,8 @@ public class GalleriaController {
                 MenuItem luogo = new MenuItem(nomeLuogo);
                 luogo.setOnAction(actionEvent -> {
                     ResultSet oLuogo = galleriaDao.ordinaPerLuogo(nomeLuogo, utente.getId());
-                    Collezioni.setText("Lista Collezioni");
-                    nome.setText("");
 
-                    try {
-                        while (oLuogo.next()) {
-
-                            ordinaPerLuogo.add(new TabellaFoto(oLuogo.getString("nome")));
-
-
-                        }
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
-                    lista.getItems().setAll(ordinaPerLuogo);
-                    ordinaPerLuogo.clear();
+                    Riempilista(oLuogo, ordinaPerLuogo);
 
                 });
 
@@ -140,21 +122,8 @@ public class GalleriaController {
 
                 tema.setOnAction(actionEvent -> {
                     ResultSet oTema = galleriaDao.ordinaPerTema(nomeTema, utente.getId());
-                    Collezioni.setText("Lista Collezioni");
-                    nome.setText("");
-                    try {
-                        while (oTema.next()) {
 
-                            ordinaPerTema.add(new TabellaFoto(oTema.getString("nome")));
-
-
-                        }
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
-                    lista.getItems().setAll(ordinaPerTema);
-                    ordinaPerTema.clear();
+                    Riempilista(oTema, ordinaPerTema);
                 });
 
                 temi.getItems().add(tema);
@@ -214,57 +183,12 @@ public class GalleriaController {
                 collezione2.setOnAction(actionEvent -> {
                     int selectedIndex = lista.getSelectionModel().getSelectedIndex();
                     Foto daAggiungere= new Foto();
-                    try {daAggiungere= listaFoto.get(selectedIndex);}catch(Exception e){}
+                    try {daAggiungere= listaFoto.get(selectedIndex);}catch(Exception ignored){}
 
-                    try {
-                        galleriaDao.aggiungiaCollezione(idCollezione, daAggiungere.getId());
-                        if(privata.isSelected()){privata.setSelected(false);}
-                       error.setText("Fatto!!");
-
-                        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-                        pause.setOnFinished(event -> {
-                            error.setText("");
-                        });
-                        pause.play();
-                    }catch (Exception e){
-                        error.setText("Errore!!");
-
-                        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-                        pause.setOnFinished(event -> {
-                            error.setText("");
-                        });
-                        pause.play();
-
-                    }
-                    listaC.add(new Compone(
-                            daAggiungere.getId(),
-                            idCollezione,
-                            Date.valueOf(LocalDate.now())
-                    ));
+                    ListaCollezioni(idCollezione, daAggiungere);
                 });
 
-                Collezioni2.getItems().add(collezione2);
-
-                MenuItem collezione = new MenuItem(nomeCollezione);
-                collezione.setOnAction(actionEvent -> {
-                    ResultSet oCollezione = galleriaDao.ordinaPerCollezione(idCollezione);
-
-                    nome.setText(collezione.getText());
-
-                    try {
-                        while (oCollezione.next()) {
-                            ordinaPerCollezione.add(new TabellaFoto(oCollezione.getString("nome")));
-                        }
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    Collezioni.setText(collezione.getText());
-                    lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
-                    lista.getItems().setAll(ordinaPerCollezione);
-                    ordinaPerCollezione.clear();
-                });
-
-                Collezioni.getItems().add(collezione);
+                RiempiCollezioni(nomeCollezione, idCollezione, collezione2);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -273,12 +197,77 @@ public class GalleriaController {
 
     }
 
+    private void ListaCollezioni(int idCollezione, Foto daAggiungere) {
+        try {
+            galleriaDao.aggiungiaCollezione(idCollezione, daAggiungere.getId());
+            if(privata.isSelected()){privata.setSelected(false);}
+           error.setText("Fatto!!");
+
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(event -> error.setText(""));
+            pause.play();
+        }catch (Exception e){
+            error.setText("Errore!!");
+
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(event -> error.setText(""));
+            pause.play();
+
+        }
+        listaC.add(new Compone(
+                daAggiungere.getId(),
+                idCollezione,
+                Date.valueOf(LocalDate.now())
+        ));
+    }
+
+    private void RiempiCollezioni(String nomeCollezione, int idCollezione, MenuItem collezione2) {
+        Collezioni2.getItems().add(collezione2);
+
+        MenuItem collezione = new MenuItem(nomeCollezione);
+        collezione.setOnAction(actionEvent -> {
+            ResultSet oCollezione = galleriaDao.ordinaPerCollezione(idCollezione);
+
+            nome.setText(collezione.getText());
+
+            try {
+                while (oCollezione.next()) {
+                    ordinaPerCollezione.add(new TabellaFoto(oCollezione.getString("nome")));
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            Collezioni.setText(collezione.getText());
+            lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
+            lista.getItems().setAll(ordinaPerCollezione);
+            ordinaPerCollezione.clear();
+        });
+
+        Collezioni.getItems().add(collezione);
+    }
+
+    private void Riempilista(ResultSet oLuogo, ArrayList<TabellaFoto> ordinaPerLuogo) {
+        try {
+            while (oLuogo.next()) {
+
+                ordinaPerLuogo.add(new TabellaFoto(oLuogo.getString("nome")));
+
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
+        lista.getItems().setAll(ordinaPerLuogo);
+        ordinaPerLuogo.clear();
+    }
+
     private void isprivate(MouseEvent mouseEvent) {
 
         int sIndex = lista.getSelectionModel().getSelectedIndex();
         Foto isPrivata=new Foto();
-         try {isPrivata = listaFoto.get(sIndex);}catch (Exception e){}
-        if (isPrivata.isPrivata() == true) {
+         try {isPrivata = listaFoto.get(sIndex);}catch (Exception ignored){}
+        if (isPrivata.isPrivata()) {
 
             if (sIndex >= 0) {
                 privata.setSelected(true);
@@ -292,7 +281,7 @@ public class GalleriaController {
         Stage newStage = new Stage();
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Nuova foto.fxml"));
-        Scene scene = null;
+        Scene scene;
         try {
             scene = new Scene(fxmlLoader.load());
         } catch (IOException e) {
@@ -308,8 +297,7 @@ public class GalleriaController {
 
 
         Object userData = newStage.getUserData();
-        if (userData instanceof Foto) {
-            Foto foto = (Foto) userData;
+        if (userData instanceof Foto foto) {
             listaFoto.add(foto);
         }
         AggiornaLista ();
@@ -345,69 +333,7 @@ public class GalleriaController {
 
         try {
             while (listaCollezioniDao.next()) {
-                listaCollezioni.add(new Collezione(
-                        listaCollezioniDao.getString("nome"),
-                        listaCollezioniDao.getInt("idCollezione"),
-                        listaCollezioniDao.getDate("data_creazione").toLocalDate()
-                ));
-
-                String nomeCollezione = listaCollezioniDao.getString("nome");
-                int idCollezione = listaCollezioniDao.getInt("idCollezione");
-
-                MenuItem collezione2 = new MenuItem(nomeCollezione);
-
-                collezione2.setOnAction(actionEvent -> {
-                    int selectedIndex = lista.getSelectionModel().getSelectedIndex();
-                    Foto daAggiungere= listaFoto.get(selectedIndex);
-                    try {
-                        galleriaDao.aggiungiaCollezione(idCollezione, daAggiungere.getId());
-                        if(privata.isSelected()){privata.setSelected(false);}
-                        error.setText("Fatto!!");
-
-                        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-                        pause.setOnFinished(event -> {
-                            error.setText("");
-                        });
-                        pause.play();
-                    }catch (Exception e){
-                        error.setText("Errore!!");
-
-                        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-                        pause.setOnFinished(event -> {
-                            error.setText("");
-                        });
-                        pause.play();
-
-                    }
-                    listaC.add(new Compone(
-                            daAggiungere.getId(),
-                            idCollezione,
-                            Date.valueOf(LocalDate.now())
-                    ));
-                });
-
-                Collezioni2.getItems().add(collezione2);
-
-                MenuItem collezione = new MenuItem(nomeCollezione);
-                collezione.setOnAction(actionEvent -> {
-                    ResultSet oCollezione = galleriaDao.ordinaPerCollezione(idCollezione);
-
-                    nome.setText(collezione.getText());
-
-                    try {
-                        while (oCollezione.next()) {
-                            ordinaPerCollezione.add(new TabellaFoto(oCollezione.getString("nome")));
-                        }
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    Collezioni.setText(collezione.getText());
-                    lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
-                    lista.getItems().setAll(ordinaPerCollezione);
-                    ordinaPerCollezione.clear();
-                });
-
-                Collezioni.getItems().add(collezione);
+                ListaCollezioni(listaCollezioniDao);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -416,6 +342,26 @@ public class GalleriaController {
 
     }
 
+    private void ListaCollezioni(ResultSet listaCollezioniDao) throws SQLException {
+        listaCollezioni.add(new Collezione(
+                listaCollezioniDao.getString("nome"),
+                listaCollezioniDao.getInt("idCollezione"),
+                listaCollezioniDao.getDate("data_creazione").toLocalDate()
+        ));
+
+        String nomeCollezione = listaCollezioniDao.getString("nome");
+        int idCollezione = listaCollezioniDao.getInt("idCollezione");
+
+        MenuItem collezione2 = new MenuItem(nomeCollezione);
+
+        collezione2.setOnAction(actionEvent -> {
+            int selectedIndex = lista.getSelectionModel().getSelectedIndex();
+            Foto daAggiungere= listaFoto.get(selectedIndex);
+            ListaCollezioni(idCollezione, daAggiungere);
+        });
+
+        RiempiCollezioni(nomeCollezione, idCollezione, collezione2);
+    }
 
 
     private @FXML void Luoghipiuimmortalati() {
@@ -423,7 +369,7 @@ public class GalleriaController {
         Stage newStage = new Stage();
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LuoghiPiùImmortalati.fxml"));
-        Scene scene = null;
+        Scene scene;
         try {
             scene = new Scene(fxmlLoader.load());
         } catch (IOException e) {
@@ -444,11 +390,8 @@ public class GalleriaController {
 
         lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
         lista.getItems().setAll(listaF);
-
-
-            Collezioni.setText("Lista Collezioni");
-            nome.setText("");
-
+        Collezioni.setText("Lista Collezioni");
+        nome.setText("");
     }
 
 
@@ -489,7 +432,7 @@ public class GalleriaController {
     }
     public void Privata(){
         int sIndex = lista.getSelectionModel().getSelectedIndex();
-        if (privata.isSelected() == true){
+        if (privata.isSelected()){
 
             if (sIndex >= 0) {
 
@@ -499,7 +442,7 @@ public class GalleriaController {
 
 
             }
-        }else if (privata.isSelected() == false) {
+        }else if (!privata.isSelected()) {
 
             if (sIndex >= 0) {
 
@@ -528,72 +471,10 @@ public class GalleriaController {
 
         try {
             while (listaCollezioniDao.next()) {
-                listaCollezioni.add(new Collezione(
-                        listaCollezioniDao.getString("nome"),
-                        listaCollezioniDao.getInt("idCollezione"),
-                        listaCollezioniDao.getDate("data_creazione").toLocalDate()
-                ));
-
-                String nomeCollezione = listaCollezioniDao.getString("nome");
-                int idCollezione = listaCollezioniDao.getInt("idCollezione");
-
-                MenuItem collezione2 = new MenuItem(nomeCollezione);
-
-                collezione2.setOnAction(actionEvent -> {
-                    int selectedIndex = lista.getSelectionModel().getSelectedIndex();
-                    Foto daAggiungere= listaFoto.get(selectedIndex);
-                    try {
-                        galleriaDao.aggiungiaCollezione(idCollezione, daAggiungere.getId());
-                        if(privata.isSelected()){privata.setSelected(false);}
-                        error.setText("Fatto!!");
-
-                        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-                        pause.setOnFinished(event -> {
-                            error.setText("");
-                        });
-                        pause.play();
-                    }catch (Exception e){
-                        error.setText("Errore!!");
-
-                        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-                        pause.setOnFinished(event -> {
-                            error.setText("");
-                        });
-                        pause.play();
-
-                    }
-                    listaC.add(new Compone(
-                            daAggiungere.getId(),
-                            idCollezione,
-                            Date.valueOf(LocalDate.now())
-                    ));
-                });
-
-                Collezioni2.getItems().add(collezione2);
-
-                MenuItem collezione = new MenuItem(nomeCollezione);
-                collezione.setOnAction(actionEvent -> {
-                    ResultSet oCollezione = galleriaDao.ordinaPerCollezione(idCollezione);
-
-                    nome.setText(collezione.getText());
-
-                    try {
-                        while (oCollezione.next()) {
-                            ordinaPerCollezione.add(new TabellaFoto(oCollezione.getString("nome")));
-                        }
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    Collezioni.setText(collezione.getText());
-                    lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
-                    lista.getItems().setAll(ordinaPerCollezione);
-                    ordinaPerCollezione.clear();
-                });
-
-                Collezioni.getItems().add(collezione);
+                ListaCollezioni(listaCollezioniDao);
 
 
-               Ripristina();
+                Ripristina();
 
             }
         } catch (SQLException e) {

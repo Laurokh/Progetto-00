@@ -16,12 +16,10 @@ public class Foto {
 
     private String nome;
 
-    private Utente scattata_da;
-
     private FileChooser File;
-    private ArrayList<Compone> compone = new ArrayList<>();
+
     private List<Integer> temi = new ArrayList<>();
-    private ArrayList<Utente> rappresenta = new ArrayList<>();
+
 
     public Foto() {
     }
@@ -60,13 +58,6 @@ public class Foto {
         return luogo;
     }
 
-    public Utente getScattata_da() {
-        return scattata_da;
-    }
-
-    public List<Integer> getTemi() {
-        return temi;
-    }
 
     public String scegliFoto() {
 
@@ -96,9 +87,7 @@ public class Foto {
     }
 
 
-    public void setscattata_da(Utente scattata_da) {
-        this.scattata_da = scattata_da;
-    }
+
 
     public void addtema(int tema) {
         this.temi.add(tema);
@@ -108,17 +97,13 @@ public class Foto {
         this.temi.removeIf(item -> item.equals(tema));
     }
 
-    public void addcompone(Compone compone) {
-        this.compone.add(compone);
-    }
+
 
     public void setLuogo(Luogo luogo) {
         this.luogo = luogo;
     }
 
-    public void setrappresenta(Utente rappresenta) {
-        this.rappresenta.add(rappresenta);
-    }
+
 
 
 

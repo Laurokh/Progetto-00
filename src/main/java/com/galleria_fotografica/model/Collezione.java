@@ -3,7 +3,7 @@ package com.galleria_fotografica.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Collezione {
+public class  Collezione {
     private String nome;
     private int id;
     private LocalDate data_creazione;

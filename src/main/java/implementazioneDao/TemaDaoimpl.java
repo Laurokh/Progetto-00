@@ -23,23 +23,4 @@ public class TemaDaoimpl implements TemaDao {
 
     }
 
-
-    public ResultSet nuovoTema (String nome,String descrizione){
-        String query= "INSERT INTO Tema VALUES (DEFAULT,'"+descrizione+"','"+nome+"')";
-        try {
-            Connessione db = Connessione.getInstanza();
-            ResultSet rs = db.connessione.createStatement().executeQuery(query);
-            db.connessione.close();
-            if (rs.next()) {
-                return rs;
-            } else {
-                return null ;
-            }
-
-        } catch (
-                SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 }
