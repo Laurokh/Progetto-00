@@ -53,7 +53,7 @@ public class Foto {
         return data_scatto;
     }
 
-    public String getNome() {return nome;}
+
     public Luogo getLuogo() {
         return luogo;
     }

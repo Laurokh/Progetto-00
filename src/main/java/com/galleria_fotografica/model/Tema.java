@@ -1,6 +1,5 @@
 package com.galleria_fotografica.model;
 
-import java.util.ArrayList;
 
 public class Tema {
     private int id;

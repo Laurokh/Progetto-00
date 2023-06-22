@@ -2,6 +2,7 @@ package com.galleria_fotografica.model;
 
 import java.util.Date;
 
+
 public class Compone {
     private Date data_creazione;
     private int foto;

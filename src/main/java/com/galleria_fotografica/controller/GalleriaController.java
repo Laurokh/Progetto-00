@@ -150,20 +150,7 @@ public class GalleriaController {
 
         }
 
-        ResultSet listaDao = galleriaDao.listaFoto(utente.getId());
-
-        try {
-            while (listaDao.next()) {
-
-                listaF.add(new TabellaFoto(listaDao.getString("nome")));
-
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
-        lista.getItems().addAll(listaF);
+        AggiornaLista();
 
 
 
@@ -232,7 +219,7 @@ public class GalleriaController {
 
             try {
                 while (oCollezione.next()) {
-                    ordinaPerCollezione.add(new TabellaFoto(oCollezione.getString("nome")));
+                    ordinaPerCollezione.add(new TabellaFoto(oCollezione.getInt("idfoto"), oCollezione.getString("nome")));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -250,7 +237,7 @@ public class GalleriaController {
         try {
             while (oLuogo.next()) {
 
-                ordinaPerLuogo.add(new TabellaFoto(oLuogo.getString("nome")));
+                ordinaPerLuogo.add(new TabellaFoto(oLuogo.getInt("idfoto"), oLuogo.getString("nome")));
 
 
             }
@@ -298,9 +285,10 @@ public class GalleriaController {
 
         Object userData = newStage.getUserData();
         if (userData instanceof Foto foto) {
+
             listaFoto.add(foto);
+            AggiornaLista();
         }
-        AggiornaLista ();
 
     }
 
@@ -399,27 +387,28 @@ public class GalleriaController {
 
 
         int selectedIndex = lista.getSelectionModel().getSelectedIndex();
+
         if (selectedIndex >= 0) {
+            TabellaFoto tabellaFoto = lista.getItems().get(selectedIndex);
+            int idDaEliminare = tabellaFoto.getId();
 
-            Foto daEliminare = listaFoto.get(selectedIndex);
-            listaFoto.remove(daEliminare);
-            galleriaDao.eliminaFoto(String.valueOf(daEliminare.getId()));
-
-            AggiornaLista();
-
-
-
+            listaFoto.removeIf(foto -> foto.getId() == idDaEliminare);
+            galleriaDao.eliminaFoto(String.valueOf(idDaEliminare));
         }
+
+        AggiornaLista();
     }
 
-    public void AggiornaLista (){
 
+    public void AggiornaLista() {
         listaF.clear();
-        ResultSet listaDao = galleriaDao.listaFoto(utente.getId());
 
+        ResultSet listaDao = galleriaDao.listaFoto(utente.getId());
         try {
             while (listaDao.next()) {
-                listaF.add(new TabellaFoto(listaDao.getString("nome")));
+                int idFoto = listaDao.getInt("idFoto");
+                String nomeFoto = listaDao.getString("nome");
+                listaF.add(new TabellaFoto(idFoto, nomeFoto));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -428,34 +417,26 @@ public class GalleriaController {
         lista.getItems().clear();
         lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
         lista.getItems().addAll(listaF);
-
     }
-    public void Privata(){
-        int sIndex = lista.getSelectionModel().getSelectedIndex();
-        if (privata.isSelected()){
 
-            if (sIndex >= 0) {
 
-                Foto daPrivata = listaFoto.get(sIndex);
-                galleriaDao.isPrivate(String.valueOf(daPrivata.getId()));
+    public void Privata() {
+        int selectedIndex = lista.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            TabellaFoto tabellaFoto = lista.getItems().get(selectedIndex);
+            int idFoto = tabellaFoto.getId();
+
+            Foto daPrivata = listaFoto.get(selectedIndex);
+            if (privata.isSelected()) {
+                galleriaDao.isPrivate(String.valueOf(idFoto));
                 daPrivata.setPrivata(true);
-
-
-            }
-        }else if (!privata.isSelected()) {
-
-            if (sIndex >= 0) {
-
-                Foto daPrivata = listaFoto.get(sIndex);
-                galleriaDao.isPubblica(String.valueOf(daPrivata.getId()));
+            } else {
+                galleriaDao.isPubblica(String.valueOf(idFoto));
                 daPrivata.setPrivata(false);
-
-
-
             }
         }
+    }
 
-}
 
 
     public void eliminaCollezione() {

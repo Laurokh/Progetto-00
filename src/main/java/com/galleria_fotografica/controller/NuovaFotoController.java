@@ -124,35 +124,35 @@ public class NuovaFotoController {
         Stage stage = (Stage) dispositivoMenuButton.getScene().getWindow();
         foto.setDataScatto(dataScatto.getValue());
         utente= (Utente)stage.getUserData();
+        ResultSet rs= fotoDao.nuovafoto(nome.getText(), foto.isPrivata(), utente.getId(), foto.getDispositivo(), foto.getData_scatto(), foto.getLuogo());
 
        try {
-            ResultSet rs= fotoDao.nuovafoto(nome.getText(), foto.isPrivata(), utente.getId(), foto.getDispositivo(), foto.getData_scatto(), foto.getLuogo());
-            
-            try{
-            if(rs.next()) {fotoId = rs.getInt("idFoto");}}catch(SQLException e){}
 
-                for (int id : idTemi) {
-                    fotoDao.newPossiede(fotoId,id);
+           try{
+               if(rs.next()) {fotoId = rs.getInt("idFoto");}}catch(SQLException e){}
 
-                }
+           for (int id : idTemi) {
+               fotoDao.newPossiede(fotoId,id);
 
-                }catch (Exception e){
-            errore.setText("Errore!!");
+           }
 
-            PauseTransition pause = new PauseTransition(Duration.seconds(3));
-            pause.setOnFinished(event -> {
-                errore.setText("");
-            });
-            pause.play();
-            return;}
-            
+       }catch (Exception e){
+           errore.setText("Errore!!");
+
+           PauseTransition pause = new PauseTransition(Duration.seconds(3));
+           pause.setOnFinished(event -> {
+               errore.setText("");
+           });
+           pause.play();
+           return;}
 
 
 
 
 
-        stage.close();
         stage.setUserData(foto);
+        stage.close();
+
     }
 
 
