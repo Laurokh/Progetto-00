@@ -126,9 +126,10 @@ public class NuovaFotoController {
         Stage stage = (Stage) dispositivoMenuButton.getScene().getWindow();
         foto.setDataScatto(dataScatto.getValue());
         utente= (Utente)stage.getUserData();
-        ResultSet rs= fotoDao.nuovafoto(nome.getText(), foto.isPrivata(), utente.getId(), foto.getDispositivo(), foto.getData_scatto(), foto.getLuogo());
+
 
        try {
+           ResultSet rs= fotoDao.nuovafoto(nome.getText(), foto.isPrivata(), utente.getId(), foto.getDispositivo(), foto.getData_scatto(), foto.getLuogo());
 
            try{
                if(rs.next()) {fotoId = rs.getInt("idFoto");}}catch(SQLException ignored){}

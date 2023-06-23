@@ -97,7 +97,7 @@ public class GalleriaController {
                 MenuItem luogo = new MenuItem(nomeLuogo);
                 luogo.setOnAction(actionEvent -> {
                     ResultSet oLuogo = galleriaDao.ordinaPerLuogo(nomeLuogo, utente.getId());
-
+                    privata.setVisible(false);
                     Riempilista(oLuogo, ordinaPerLuogo);
 
                 });
@@ -122,7 +122,7 @@ public class GalleriaController {
 
                 tema.setOnAction(actionEvent -> {
                     ResultSet oTema = galleriaDao.ordinaPerTema(nomeTema, utente.getId());
-
+                    privata.setVisible(false);
                     Riempilista(oTema, ordinaPerTema);
                 });
 
