@@ -34,9 +34,10 @@ public class NuovaCollezione {
 
 
         NuovaCollezioneDaoimpl dao = new NuovaCollezioneDaoimpl();
-        ResultSet lUtenti = dao.listautenti();
-        String nomeUtenteLoggato = utente.getNickname();
+
         try {
+            ResultSet lUtenti = dao.listautenti();
+            String nomeUtenteLoggato = utente.getNickname();
             while (lUtenti.next()) {
                 String nomeUtente = lUtenti.getString("username");
                 int idUtente = lUtenti.getInt("idUtente");

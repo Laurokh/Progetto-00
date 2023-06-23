@@ -45,9 +45,10 @@ public class NuovaFotoController {
 
     TemaDaoimpl temaDao = new TemaDaoimpl();
     LuogoDaoimpl luogoDao = new LuogoDaoimpl();
-    ResultSet rs = temaDao.caricaTemi();
-    ResultSet rs2 = luogoDao.caricaLuogo();
+
+
     try {
+        ResultSet rs2 = luogoDao.caricaLuogo();
         while (rs2.next()) {
             String nomeLuogo = rs2.getString("nome");
             double lat = rs2.getDouble("latitudine");
@@ -70,6 +71,7 @@ public class NuovaFotoController {
     }
 
     try {
+        ResultSet rs = temaDao.caricaTemi();
         while (rs.next()) {
             String nomeTema = rs.getString("nome");
             int idTema = rs.getInt("idTema");
@@ -129,20 +131,15 @@ public class NuovaFotoController {
        try {
 
            try{
-               if(rs.next()) {fotoId = rs.getInt("idFoto");}}catch(SQLException e){}
+               if(rs.next()) {fotoId = rs.getInt("idFoto");}}catch(SQLException ignored){}
 
-           for (int id : idTemi) {
-               fotoDao.newPossiede(fotoId,id);
-
-           }
+           for (int id : idTemi) fotoDao.newPossiede(fotoId, id);
 
        }catch (Exception e){
            errore.setText("Errore!!");
 
            PauseTransition pause = new PauseTransition(Duration.seconds(3));
-           pause.setOnFinished(event -> {
-               errore.setText("");
-           });
+           pause.setOnFinished(event -> errore.setText(""));
            pause.play();
            return;}
 

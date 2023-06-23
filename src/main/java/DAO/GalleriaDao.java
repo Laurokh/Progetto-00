@@ -19,15 +19,15 @@ public interface GalleriaDao {
 
     ResultSet ordinaPerCollezione (int idCollezione);
 
-    ResultSet isPubblica (String id);
-    ResultSet isPrivate (String id);
+    void isPubblica (String id);
+    void isPrivate (String id);
 
     ResultSet listaCompone();
 
-    ResultSet aggiungiaCollezione (int idCollezione, int idFoto);
+    void aggiungiaCollezione (int idCollezione, int idFoto);
 
-    ResultSet eliminaFoto(String id);
+    void eliminaFoto(String id);
 
-    ResultSet eliminaCollezione(String elimina);
+    void eliminaCollezione(String elimina);
 
 }

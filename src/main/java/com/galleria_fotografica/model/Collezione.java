@@ -10,7 +10,7 @@ public class  Collezione {
 
 
     //
-    private ArrayList<String> compone = new ArrayList<String>();
+    private ArrayList<String> compone = new ArrayList<>();
 
     public Collezione() {
 

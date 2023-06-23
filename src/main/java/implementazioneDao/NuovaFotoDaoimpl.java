@@ -3,7 +3,6 @@ package implementazioneDao;
 import DAO.NuovafotoDao;
 import com.galleria_fotografica.connections.Connessione;
 import com.galleria_fotografica.model.Luogo;
-import com.galleria_fotografica.model.Tema;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -25,16 +24,15 @@ public class NuovaFotoDaoimpl implements NuovafotoDao {
 
     }
 
-    public ResultSet newPossiede (int idFoto, int idTema){
+    public void newPossiede (int idFoto, int idTema){
         String query =  "INSERT INTO Possiede VALUES('"+idFoto+"','"+idTema+"')";
 
         try {
             Connessione db = Connessione.getInstanza();
             Statement rss = db.connessione.createStatement();
             rss.executeUpdate(query);
-            ResultSet rs= rss.getResultSet();
+            rss.getResultSet();
             db.connessione.close();
-            return rs ;
 
 
         } catch (

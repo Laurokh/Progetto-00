@@ -39,11 +39,13 @@ public class LuoghiPiuImmortalati {
 
     private ObservableList<Map<String, Object>> getDatiTabella() {
         GalleriaDaoimpl foto = new GalleriaDaoimpl();
-        ResultSet tab = foto.luoghiPiuImmoratlati();
+
         ObservableList<Map<String, Object>> tabellaDaVisualizzare = FXCollections.observableArrayList();
 
         try {
+            ResultSet tab = foto.luoghiPiuImmoratlati();
             while (tab.next()) {
+
                 String luogo = tab.getString("Nome");
                 int immortalazioni = tab.getInt("Immortalazioni");
 

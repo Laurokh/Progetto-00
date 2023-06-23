@@ -136,15 +136,13 @@ public class GalleriaDaoimpl implements GalleriaDao {
         }
     }
 
-    public ResultSet eliminaFoto (String id){
+    public void eliminaFoto (String id){
         String query= "DELETE FROM FOTO where idfoto='"+id+"'";
         try {
             Connessione db = Connessione.getInstanza();
             Statement rss = db.connessione.createStatement();
             rss.executeUpdate(query);
-            ResultSet rs= rss.getResultSet();
             db.connessione.close();
-            return rs ;
 
 
         } catch (
@@ -154,15 +152,14 @@ public class GalleriaDaoimpl implements GalleriaDao {
 
 
     }
-    public ResultSet isPrivate (String id) {
+    public void isPrivate (String id) {
         String query= "Update FOTO Set privata = 'true' where idFoto = '"+id+"'";
         try {
             Connessione db = Connessione.getInstanza();
             Statement rss = db.connessione.createStatement();
             rss.executeUpdate(query);
-            ResultSet rs= rss.getResultSet();
+            rss.getResultSet();
             db.connessione.close();
-            return rs ;
 
 
         } catch (
@@ -171,15 +168,14 @@ public class GalleriaDaoimpl implements GalleriaDao {
         }
     }
 
-        public ResultSet isPubblica (String id) {
+        public void isPubblica (String id) {
             String query= "Update FOTO Set privata = 'false' where idFoto = '"+id+"'";
             try {
                 Connessione db = Connessione.getInstanza();
                 Statement rss = db.connessione.createStatement();
                 rss.executeUpdate(query);
-                ResultSet rs= rss.getResultSet();
+                rss.getResultSet();
                 db.connessione.close();
-                return rs ;
 
 
             } catch (
@@ -189,15 +185,14 @@ public class GalleriaDaoimpl implements GalleriaDao {
 
     }
 
-    public ResultSet aggiungiaCollezione (int idCollezione, int idFoto){
+    public void aggiungiaCollezione (int idCollezione, int idFoto){
         String query= "INSERT INTO Compone VALUES('"+idFoto+"','"+idCollezione+"','"+LocalDate.now()+"');";
         try {
             Connessione db = Connessione.getInstanza();
             Statement rss = db.connessione.createStatement();
             rss.executeUpdate(query);
-            ResultSet rs= rss.getResultSet();
+            rss.getResultSet();
             db.connessione.close();
-            return rs ;
 
 
         } catch (
@@ -224,15 +219,14 @@ public class GalleriaDaoimpl implements GalleriaDao {
 
     }
 
-    public ResultSet eliminaCollezione(String elimina) {
+    public void eliminaCollezione(String elimina) {
         String query= "DELETE FROM Collezione where nome='"+elimina+"'";
         try {
             Connessione db = Connessione.getInstanza();
             Statement rss = db.connessione.createStatement();
             rss.executeUpdate(query);
-            ResultSet rs= rss.getResultSet();
+            rss.getResultSet();
             db.connessione.close();
-            return rs ;
 
 
         } catch (

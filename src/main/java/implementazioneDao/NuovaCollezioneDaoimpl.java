@@ -28,7 +28,7 @@ public class NuovaCollezioneDaoimpl implements NuovaCollezioneDAO {
     }
 
 
-    public ResultSet newPartecipazione (int idutente){
+    public void newPartecipazione (int idutente){
         String query = "insert into Partecipa_a Values ('"+idutente+"',(select idcollezione from collezione order by idcollezione desc limit 1))";
 
 
@@ -36,9 +36,8 @@ public class NuovaCollezioneDaoimpl implements NuovaCollezioneDAO {
             Connessione db = Connessione.getInstanza();
             Statement rss = db.connessione.createStatement();
             rss.executeUpdate(query);
-            ResultSet rs= rss.getResultSet();
+            rss.getResultSet();
             db.connessione.close();
-            return rs ;
 
 
         } catch (
@@ -52,7 +51,7 @@ public class NuovaCollezioneDaoimpl implements NuovaCollezioneDAO {
 
 
 
-    public ResultSet nuovaCollezione(String nome, LocalDate data) {
+    public void nuovaCollezione(String nome, LocalDate data) {
         String query = "INSERT INTO Collezione VALUES (DEFAULT,'" + nome + "','" + data + "' )";
 
 
@@ -61,9 +60,8 @@ public class NuovaCollezioneDaoimpl implements NuovaCollezioneDAO {
             Connessione db = Connessione.getInstanza();
             Statement rss = db.connessione.createStatement();
             rss.executeUpdate(query);
-            ResultSet rs= rss.getResultSet();
+            rss.getResultSet();
             db.connessione.close();
-            return rs ;
 
 
         } catch (

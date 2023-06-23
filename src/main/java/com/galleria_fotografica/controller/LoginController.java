@@ -58,19 +58,17 @@ public class LoginController {
 
             testo.setText("Nome utente o Password errata");
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
-            pause.setOnFinished(event -> {
-                testo.setText("");
-            });
+            pause.setOnFinished(event -> testo.setText(""));
             pause.play();
         }
-        ;
+
     }
 
     private @FXML void Registrazione (){
         Stage newStage = new Stage();
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Registrazione.fxml"));
-        Scene scene = null;
+        Scene scene;
         try {
             scene = new Scene(fxmlLoader.load());
         } catch (IOException e) {
