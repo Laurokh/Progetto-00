@@ -170,7 +170,9 @@ public class GalleriaController {
                 collezione2.setOnAction(actionEvent -> {
                     int selectedIndex = lista.getSelectionModel().getSelectedIndex();
                     Foto daAggiungere= new Foto();
-                    try {daAggiungere= listaFoto.get(selectedIndex);}catch(Exception ignored){}
+                    try {daAggiungere= listaFoto.get(selectedIndex);
+                    }catch(Exception ignored){}
+
 
                     ListaCollezioni(idCollezione, daAggiungere);
                 });
@@ -186,13 +188,23 @@ public class GalleriaController {
 
     private void ListaCollezioni(int idCollezione, Foto daAggiungere) {
         try {
-            galleriaDao.aggiungiaCollezione(idCollezione, daAggiungere.getId());
-            if(privata.isSelected()){privata.setSelected(false);}
-           error.setText("Fatto!!");
+            int selectedIndex =lista.getSelectionModel().getSelectedIndex();
+            TabellaFoto tabellaFoto = lista.getItems().get(selectedIndex);
+            int idFotoDaAggiungere = tabellaFoto.getId();
 
-            PauseTransition pause = new PauseTransition(Duration.seconds(3));
-            pause.setOnFinished(event -> error.setText(""));
-            pause.play();
+
+
+
+                galleriaDao.aggiungiaCollezione(idCollezione, idFotoDaAggiungere);
+                if (privata.isSelected()) {
+                    privata.setSelected(false);
+                }
+                error.setText("Fatto!!");
+
+                PauseTransition pause = new PauseTransition(Duration.seconds(3));
+                pause.setOnFinished(event -> error.setText(""));
+                pause.play();
+
         }catch (Exception e){
             error.setText("Errore!!");
 
@@ -206,6 +218,8 @@ public class GalleriaController {
                 idCollezione,
                 Date.valueOf(LocalDate.now())
         ));
+        Privata();
+        AggiornaLista();
     }
 
     private void RiempiCollezioni(String nomeCollezione, int idCollezione, MenuItem collezione2) {
@@ -213,6 +227,8 @@ public class GalleriaController {
 
         MenuItem collezione = new MenuItem(nomeCollezione);
         collezione.setOnAction(actionEvent -> {
+
+
             ResultSet oCollezione = galleriaDao.ordinaPerCollezione(idCollezione);
 
             nome.setText(collezione.getText());
@@ -220,6 +236,7 @@ public class GalleriaController {
             try {
                 while (oCollezione.next()) {
                     ordinaPerCollezione.add(new TabellaFoto(oCollezione.getInt("idfoto"), oCollezione.getString("nome")));
+                    privata.setVisible(false);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -378,6 +395,7 @@ public class GalleriaController {
 
         lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
         lista.getItems().setAll(listaF);
+        privata.setVisible(true);
         Collezioni.setText("Lista Collezioni");
         nome.setText("");
     }
@@ -435,6 +453,7 @@ public class GalleriaController {
                 daPrivata.setPrivata(false);
             }
         }
+        AggiornaLista();
     }
 
 
