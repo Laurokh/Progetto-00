@@ -37,13 +37,16 @@ public class GalleriaController {
     private @FXML Label error;
     private @FXML Label nome;
     private  @FXML MenuItem annullaC;
+    private  @FXML Button eliminaFoto;
+
+
     GalleriaDaoimpl galleriaDao = new GalleriaDaoimpl();
     ArrayList<TabellaFoto> listaF = new ArrayList<>();
 
 
     private ArrayList<Foto> listaFoto = new ArrayList<>();
 
-    private ArrayList<Compone> listaC= new ArrayList<>();
+
     private ArrayList<Collezione> listaCollezioni = new ArrayList<>();
     private ArrayList<Luogo> listaLuoghi = new ArrayList<>();
     private ArrayList<Tema> listaTemi = new ArrayList<>();
@@ -58,7 +61,6 @@ public class GalleriaController {
 
     private @FXML void initialize() {
         nomeUtenteLabel.setText(utente.getNickname());
-        ResultSet listaCompone= galleriaDao.listaCompone();
         ResultSet listaTemiDao = galleriaDao.listaTemi();
         ResultSet listaLuoghiDao = galleriaDao.listaLuoghi();
         ResultSet listaFotoDao = galleriaDao.listaFoto(utente.getId());
@@ -70,18 +72,6 @@ public class GalleriaController {
         lista.setOnMouseClicked(this::isprivate);
 
 
-    try {
-        while(listaCompone.next()){
-            listaC.add(new Compone(listaCompone.getInt("idFoto"),
-
-                    listaCompone.getInt("idCollezione"),
-                    listaCompone.getDate("data_aggiunta"))
-
-            );
-        }
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
-    }
 
         try {
 
@@ -98,6 +88,8 @@ public class GalleriaController {
                 luogo.setOnAction(actionEvent -> {
                     ResultSet oLuogo = galleriaDao.ordinaPerLuogo(nomeLuogo, utente.getId());
                     privata.setVisible(false);
+                    eliminaFoto.setVisible(false);
+                    Collezioni2.setVisible(false);
                     Riempilista(oLuogo, ordinaPerLuogo);
 
                 });
@@ -123,6 +115,9 @@ public class GalleriaController {
                 tema.setOnAction(actionEvent -> {
                     ResultSet oTema = galleriaDao.ordinaPerTema(nomeTema, utente.getId());
                     privata.setVisible(false);
+                    eliminaFoto.setVisible(false);
+                    Collezioni2.setVisible(false);
+
                     Riempilista(oTema, ordinaPerTema);
                 });
 
@@ -213,11 +208,6 @@ public class GalleriaController {
             pause.play();
 
         }
-        listaC.add(new Compone(
-                daAggiungere.getId(),
-                idCollezione,
-                Date.valueOf(LocalDate.now())
-        ));
         Privata();
         AggiornaLista();
     }
@@ -237,6 +227,8 @@ public class GalleriaController {
                 while (oCollezione.next()) {
                     ordinaPerCollezione.add(new TabellaFoto(oCollezione.getInt("idfoto"), oCollezione.getString("nome")));
                     privata.setVisible(false);
+                    eliminaFoto.setVisible(false);
+                    Collezioni2.setVisible(false);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -275,6 +267,7 @@ public class GalleriaController {
 
             if (sIndex >= 0) {
                 privata.setSelected(true);
+
 
             }
         } else {privata.setSelected(false);}
@@ -396,6 +389,8 @@ public class GalleriaController {
         lista.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("nome"));
         lista.getItems().setAll(listaF);
         privata.setVisible(true);
+        eliminaFoto.setVisible(true);
+        Collezioni2.setVisible(true);
         Collezioni.setText("Lista Collezioni");
         nome.setText("");
     }
