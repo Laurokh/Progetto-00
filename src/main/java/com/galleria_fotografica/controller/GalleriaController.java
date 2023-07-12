@@ -395,7 +395,7 @@ public class GalleriaController {
         nome.setText("");
     }
 
-
+ //hh
     public void EliminaFoto() {
 
 
