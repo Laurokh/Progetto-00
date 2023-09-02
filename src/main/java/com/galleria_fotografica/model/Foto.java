@@ -89,7 +89,7 @@ public class Foto {
 
 
 
-    public void addtema(int tema) {
+    public void addTema(int tema) {
         this.temi.add(tema);
     }
 

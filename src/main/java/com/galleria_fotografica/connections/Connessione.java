@@ -12,7 +12,7 @@ public class Connessione {
 
     private Connessione() throws SQLException {
         String driver= "org.postgresql.Driver";
-        String url= "jdbc:postgresql://localhost:5432/Galleria";
+        String url= "jdbc:postgresql://localhost:5432/postgres";
         String username= "postgres";
         String psw= "5656";
 //
@@ -37,22 +37,3 @@ public class Connessione {
         return istanza;
     }
 }
-
-//
-//Dao
-/*    String query= "la query";
-            try {
-            Connessione db = Connessione.getInstanza();
-            ResultSet rs = db.connessione.createStatement().executeQuery(query);
-            db.connessione.close();
-            if (rs.next()) {
-                return rs;
-            } else {
-                return null ;
-            }
-
-        } catch (
-                SQLException e) {
-            throw new RuntimeException(e);
-        }
-}*/

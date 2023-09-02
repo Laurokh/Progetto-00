@@ -79,7 +79,7 @@ public class NuovaFotoController {
             CheckMenuItem menuItem = new CheckMenuItem(nomeTema);
             menuItem.setOnAction(actionEvent -> {
                 if (menuItem.isSelected()) {
-                    foto.addtema(idTema);
+                    foto.addTema(idTema);
                     idTemi.add(idTema);
                 } else {
                     foto.togliTema(idTema);
