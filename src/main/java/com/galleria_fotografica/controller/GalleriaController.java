@@ -297,9 +297,9 @@ public class GalleriaController {
         if (userData instanceof Foto foto) {
 
             listaFoto.add(foto);
-            AggiornaLista();
-        }
 
+        }
+        AggiornaLista();
     }
 
     private @FXML void nuovaCollezione() {
